@@ -1,0 +1,35 @@
+ Address    Code        Basic                     Source
+
+0x00400000  0x3c011001  lui $1,0x00001001     19   	la	$a0, s_info
+0x00400004  0x34240000  ori $4,$1,0x00000000       
+0x00400008  0x0c100014  jal 0x00400050        20   	jal	print_str
+0x0040000c  0x24020008  addiu $2,$0,0x0000000823   	li	$v0, 8	# invoke syscall read_string
+0x00400010  0x3c011001  lui $1,0x00001001     24   	la	$a0, input_buffer
+0x00400014  0x34240077  ori $4,$1,0x00000077       
+0x00400018  0x24050020  addiu $5,$0,0x0000002025   	li	$a1, 32
+0x0040001c  0x0000000c  syscall               26   	syscall
+0x00400020  0x3c011001  lui $1,0x00001001     29   	la	$a0, input_buffer # maybe set this again just in case it changed
+0x00400024  0x34240077  ori $4,$1,0x00000077       
+0x00400028  0x0c100017  jal 0x0040005c        30   	jal	count_str_len
+0x0040002c  0x00028021  addu $16,$0,$2        31   	move	$s0, $v0 # copy result to save value register
+0x00400030  0x3c011001  lui $1,0x00001001     34   	la	$a0, s_text_len
+0x00400034  0x34240051  ori $4,$1,0x00000051       
+0x00400038  0x0c100014  jal 0x00400050        35   	jal	print_str
+0x0040003c  0x24020001  addiu $2,$0,0x0000000137   	li	$v0, 1 # invoke syscall print_int
+0x00400040  0x22040000  addi $4,$16,0x0000000038   	la	$a0, ($s0)
+0x00400044  0x0000000c  syscall               39   	syscall
+0x00400048  0x2402000a  addiu $2,$0,0x0000000a42   	li	$v0, 10
+0x0040004c  0x0000000c  syscall               43   	syscall
+0x00400050  0x24020004  addiu $2,$0,0x0000000451   	li	$v0, 4	# invoke syscall 4 (print_str)
+0x00400054  0x0000000c  syscall               52   	syscall
+0x00400058  0x03e00008  jr $31                53   	jr	$ra
+0x0040005c  0x00042821  addu $5,$0,$4         62   	move	$a1, $a0
+0x00400060  0x80a80000  lb $8,0x00000000($5)  66   	lb	$t0, ($a1)
+0x00400064  0x2001000a  addi $1,$0,0x0000000a 68   	beq	$t0, 10, count_str_len_end # 10 = \n (LF)
+0x00400068  0x10280004  beq $1,$8,0x00000004       
+0x0040006c  0x20010000  addi $1,$0,0x00000000 69   	beq	$t0, 0, count_str_len_end # 0 = \0 (NUL)
+0x00400070  0x10280002  beq $1,$8,0x00000002       
+0x00400074  0x20a50001  addi $5,$5,0x00000001 71   	addi	$a1, $a1, 1
+0x00400078  0x08100018  j 0x00400060          72   	j	count_str_len_loop
+0x0040007c  0x00a41022  sub $2,$5,$4          75   	sub	$v0, $a1, $a0
+0x00400080  0x03e00008  jr $31                76   	jr	$ra

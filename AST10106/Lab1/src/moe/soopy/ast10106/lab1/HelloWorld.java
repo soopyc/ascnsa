@@ -1,7 +1,8 @@
-// I managed to lose my original source files so this is a re-implementation (copy of slides) of what I did.
-
-/*
+/**
+ * I managed to lose my original source files so this is a re-implementation (copy of slides) of what I did.
+ * 
  * This is a simple hello world program with some arithmetic operations.
+ * @author Cassie Cheung (H10007740)
  */
 
 package moe.soopy.ast10106.lab1;
@@ -13,6 +14,9 @@ public class HelloWorld {
 		HelloWorld.basicArithmetics();
 	}
 	
+	/**
+	 * Does basic arithmetic operations and prints out the answer.
+	 */
 	static void basicArithmetics() {
 		int sum = 0;
 		int int1, int2;

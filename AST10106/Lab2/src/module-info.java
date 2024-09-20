@@ -4,5 +4,5 @@
 /**
  * 
  */
-module AST10106 {
+module Lab2 {
 }
