@@ -7,11 +7,23 @@
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
-    formatter.x86_64-linux.default = pkgs.alejandra;
-    devShells.x86_64-linux.default = pkgs.mkShellNoCC {
-      packages = [
-        pkgs.xspim
-      ];
+    formatter.${system} = pkgs.alejandra;
+    devShells.${system} = {
+      default = pkgs.mkShellNoCC {
+        packages = with pkgs; [
+          xspim
+        ];
+      };
+
+      cross = let
+        cross = pkgs.pkgsCross.mips-linux-gnu;
+      in
+        cross.mkShell {
+          nativeBuildInputs = with cross; [
+            pkg-config
+            make
+          ];
+        };
     };
   };
 }
