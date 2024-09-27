@@ -24,7 +24,7 @@ public class FourIntegers_H10007740 {
 		
 		// do the calculation
 		float average = (num1 + num2 + num3 + num4) / 4; // is there a built-in function to do this? not that i'd use this now
-		System.out.printf("You have provided the numbers: %.1f, %.1f, %.1f, %.1f\n", num1, num2, num3, num4);
+		System.out.printf("You have provided the numbers: %.1f, %.2f, %.3f, %.4f\n", num1, num2, num3, num4);
 		System.out.printf("The average of the numbers is: %.4f\n", average);
 	}
 }
