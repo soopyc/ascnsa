@@ -14,10 +14,10 @@ public class FourIntegers_H10007740 {
 		System.out.println("Please input 4 integers on each line:");
 		
 		// This could be better done with using an array but we haven't reached that point yet.
-		float num1 = scanner.nextFloat();
-		float num2 = scanner.nextFloat();
-		float num3 = scanner.nextFloat();
-		float num4 = scanner.nextFloat();
+		float num1 = (float)scanner.nextInt(); // guideline enforces integer input.
+		float num2 = (float)scanner.nextInt();
+		float num3 = (float)scanner.nextInt();
+		float num4 = (float)scanner.nextInt();
 		
 		// close the scanner after use.
 		scanner.close();
