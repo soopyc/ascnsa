@@ -21,7 +21,7 @@
         cross.mkShell {
           nativeBuildInputs = with cross; [
             pkg-config
-            make
+            gnumake
           ];
         };
     };
