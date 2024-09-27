@@ -8,7 +8,6 @@
 package moe.soopy.ast10106.lab1;
 
 public class HelloWorld {
-
 	public static void main(String[] args) {
 		System.out.println("hello world");
 		HelloWorld.basicArithmetics();
@@ -27,5 +26,4 @@ public class HelloWorld {
 		sum = int1 + int2;
 		System.out.println(String.format("The result of %s + %s = %s", int1, int2, sum));
 	}
-
 }
