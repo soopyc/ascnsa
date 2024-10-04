@@ -12,7 +12,9 @@ public class CurrencyConverter_H10007740 {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Enter the source currency: ");
-		String currency = scanner.next();
+
+		// prevent user error by forcing everything to be uppercase.
+		String currency = scanner.next().toUpperCase();
 		
 		// define currency rates
 		double rate = -1; // define fallback value here to prevent use before definition.
@@ -23,7 +25,8 @@ public class CurrencyConverter_H10007740 {
 		} else if (currency.equals("SGD")) {
 			rate = 5.9917295;
 		}
-		
+
+		// based on the original source.
 		if (rate > 0)
 			System.out.printf("%.3f %s = %.3f HKD", 1.0, currency, rate);
 		else 
