@@ -63,7 +63,7 @@ public class SAMS_H10007740 {
 		System.out.println("-".repeat(20 + 10 + 15 + 15));
 		// print out the table following the format.
 		// ideally we would use a hashmap or an array for this but i haven't learned
-		// that yet so /shrug.
+		// - that yet so /shrug.
 		System.out.printf("%-20s%-10.1f%-15.0f%15.2f\n", "Labs", markLab, weightLab * 100, markLab * weightLab);
 		System.out.printf("%-20s%-10.1f%-15.0f%15.2f\n", "Classwork", markClasswork, weightClasswork * 100,
 				markClasswork * weightClasswork);
@@ -83,8 +83,17 @@ public class SAMS_H10007740 {
 
 	// we could technically make this less targeted but this will do for now.
 	static double getMark(String item) {
-		System.out.printf("Please enter mark for %s (2 d.p., out of 100.): ", item);
-		double next = scanner.nextDouble();
-		return next;
+		while (true) {
+			System.out.printf("Please enter mark for %s (2 d.p., out of 100.): ", item);
+			double next = scanner.nextDouble();
+			// handle invalid values. prompt the user to reinsert the value if its detected
+			// - to be incorrect.
+			// note that this doesn't handle exceptions though.
+			if (next < 0 || next > 100) {
+				System.out.println("Invalid value. Please try again.");
+			} else {
+				return next;
+			}
+		}
 	}
 }
