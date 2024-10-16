@@ -15,7 +15,7 @@ public class CurrencyConverter_H10007740 {
 
 		// prevent user error by forcing everything to be uppercase.
 		String currency = scanner.next().toUpperCase();
-		
+
 		// define currency rates
 		double rate = -1; // define fallback value here to prevent use before definition.
 		if (currency.equals("USD")) {
@@ -29,10 +29,10 @@ public class CurrencyConverter_H10007740 {
 		// based on the original source.
 		if (rate > 0)
 			System.out.printf("%.3f %s = %.3f HKD", 1.0, currency, rate);
-		else 
+		else
 			System.out.println("No such currency.");
-		
+
 		// close resources
-		
+		scanner.close();
 	}
 }
