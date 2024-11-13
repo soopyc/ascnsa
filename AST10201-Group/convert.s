@@ -76,6 +76,31 @@ print_enterNo:
 	li $t1, 0
 	la $a0, buffer
 
+# this step prompts the user if they want to redo the entire thing.
+continue:
+	la    $a0, repeat    # show string repeat
+	li    $v0, 4
+	syscall
+
+	li    $v0, 12		# read char
+	syscall
+
+	bne    $v0, 121, noty     # 'y'
+	li    $a0, 10
+	li    $v0, 11
+	syscall
+	j    main
+
+noty:
+	bne    $v0, 110, notn    # 'n'
+	la    $a0, end
+	li    $v0, 4
+	syscall
+	li    $v0, 10
+	syscall
+notn:
+	j    print_promt
+
 .end main
 
 # ----------
@@ -102,6 +127,7 @@ check_alpha:
 
 # ----------
 # procedure: print2
+# desc: decimal to binary
 # $a2 = the integer to print
 # return value: $v1 = $a2
 # -----------
@@ -111,8 +137,10 @@ print2:
 	# TODO
 
 .end print2
+
 # ----------
 # procedure: print10
+# desc: decimal to decimal
 # $a2 = the integer to print
 # return value: $v1 = $a2
 # -----------
@@ -125,6 +153,7 @@ print10:
 
 # -----------
 # procedure: print8
+# desc: decimal to octal
 # $a2 = the integer to print
 # return value: $v1 = $a2
 # -----------
@@ -137,6 +166,7 @@ print8:
 
 # ----------
 # procedure: print16
+# desc: decimal to hexadecimal
 # $a2 = the integer to print
 # return value: $v1 = $a2
 # -----------
