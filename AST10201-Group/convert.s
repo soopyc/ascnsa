@@ -31,52 +31,51 @@ main:
 	syscall
 
 print_promt:
-	# TODO 
+	# TODO:
 	# prompt to user to input base between 2 and 16
 	la	$a0, promptBase
 	li	$v0, 4
 	syscall
-	
+
 	# read integer
 	li $v0, 5
 	syscall
-	
+
 	# make $s0 = base
 	move $s0, $v0
-	
+
 	# check if base is valid
 	bgt $s0, 16, outofRange_base
 	blt $s0, 2, outofRange_base
-	
+
 	# if base is valid, then continue the code
 	j print_enterNo
-	
+
 outofRange_base:
 	la $a0, invalid_base	# prompt user input again
 	li $v0, 4
 	syscall
-	
+
 	j print_promt	# prompt user input again
-	
+
 print_enterNo:
-	
+
 	# TODO
 	la	$a0, promptNumb
 	li	$v0, 4
 	syscall
-	
+
 	# read string
 	li $v0, 8
 	la $a0, buffer
 	li $a1, 32
 	syscall
-	
+
 	# initialize register
 	li $t0, 0
 	li $t1, 0
 	la $a0, buffer
-	
-	 
+
 .end main
 
 # ----------
@@ -96,10 +95,8 @@ length:	lb	$t0, 0($a1)
 endString:
 	sub	$a1, $a1, $a0
 
-	# TODO
+	# TODO: what is this supposed to do
 check_alpha:
-	
-
 
 .end str2int
 
@@ -149,3 +146,28 @@ print16:
 	# TODO
 
 .end print16
+
+# ----------
+# procedure: count_str_len
+# desc: count a string's length
+# Arguments:
+#   - $a0: starting location of the string buffer
+# Returns:
+#   - $v0: length of string
+# ----------
+count_str_len:
+	# copy starting address to $a1
+	move	$a1, $a0
+count_str_len_loop:
+	# load the starting byte to $t0
+	lb	$t0, ($a1)
+	# check if it is \n or NUL, if not we add 1; if so we branch.
+	beq	$t0, 10, count_str_len_end # 10 = \n (LF)
+	beq	$t0, 0, count_str_len_end # 0 = \0 (NUL)
+	# treat $a1 as an accumulator, add 1 when we reach here, then go back.
+	addi	$a1, $a1, 1
+	j	count_str_len_loop
+count_str_len_end:
+	# the final length of the string is the value of $a1 (end value) minus $a0 (starting value)
+	sub	$v0, $a1, $a0
+	jr	$ra
