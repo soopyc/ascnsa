@@ -18,7 +18,8 @@ newLine:	.asciiz	"\n"
 end:	.asciiz "\n End\n"
 buffer:	.space	32
 
-invalid_base: .asciiz "   The base must between 2 and 16! Please enter again!"
+msg_invalid_base:	.asciiz "   The base must between 2 and 16! Please enter again!"
+msg_illegal_char:	.asciiz "	One of the characters is illegal for the base."
 
 # ----------------------------------
 # Text/Code Segment
@@ -30,7 +31,7 @@ main:
 	li	$v0, 4
 	syscall
 
-print_promt:
+prompt_base:
 	# TODO:
 	# prompt to user to input base between 2 and 16
 	la	$a0, promptBase
@@ -52,11 +53,11 @@ print_promt:
 	j print_enterNo
 
 outofRange_base:
-	la $a0, invalid_base	# prompt user input again
+	la $a0, msg_invalid_base	# prompt user input again
 	li $v0, 4
 	syscall
 
-	j print_promt	# prompt user input again
+	j prompt_base	# prompt user input again
 
 print_enterNo:
 
@@ -70,58 +71,130 @@ print_enterNo:
 	la $a0, buffer
 	li $a1, 32
 	syscall
+	
+	# call str2int
+	la	$a0, buffer
+	move	$a1, $s0
+	jal	str2int
+	
+	# print out data to check
+	# TODO: DELETE ME
+	li	$v0, 1
+	move	$a0, $v1
+	syscall
 
-	# initialize register
-	li $t0, 0
-	li $t1, 0
-	la $a0, buffer
+	# initialize register (??)
+	#li $t0, 0
+	#li $t1, 0
+	#la $a0, buffer
 
-# this step prompts the user if they want to redo the entire thing.
+# this step prompts the user if they want to restart the entire thing.
 continue:
-	la    $a0, repeat    # show string repeat
-	li    $v0, 4
+	la	$a0, comp	# show string repeat
+	li	$v0, 4
 	syscall
 
-	li    $v0, 12		# read char
+	li	$v0, 12		# read char
 	syscall
 
-	bne    $v0, 121, noty     # 'y'
-	li    $a0, 10
-	li    $v0, 11
+	bne	$v0, 'y', noty	 # 'y'
+	li	$a0, 10
+	li	$v0, 11
 	syscall
-	j    main
+	j	main
 
 noty:
-	bne    $v0, 110, notn    # 'n'
-	la    $a0, end
-	li    $v0, 4
+	bne	$v0, 'n', notn	# 'n'
+	la	$a0, end
+	li	$v0, 4
 	syscall
-	li    $v0, 10
+	li	$v0, 10
 	syscall
 notn:
-	j    print_promt
+	j	prompt_base
 
 .end main
 
 # ----------
 # procedure: str2int
-# $a0 = starting address of buffer
-# $a2 = base
+# desc: parse string to integer
+# input: $a0 = starting address of buffer
+# input: $a1 = base
+#  temp: $t0 = character to be checked and added to $v1.
+#  temp: $t1 = the next character after $t0.
+#  temp: $t2 = sometimes mutated main current index 
+#  temp: $t3 = often-mutated current index for adding to the value in the addBaseLoop label.
+#  temp: $t6 = count string length: address of buffer
+#  temp: $t7 = count string length: temporary storage of current character.
 # return value = $v1
 # return flag $v0: 0-wrong, 1-correct
 # -----------
 .globl str2int
 str2int:
-	move	$a1, $a0
-length:	lb	$t0, 0($a1)
-	beq	$t0, 10, endString
-	addi	$a1, $a1, 1
-	j	length
-endString:
-	sub	$a1, $a1, $a0
+	# count string length
+	# i would use the stack to store '$ra's and registers but that's way too complicated to write by hand.
+	move	$t6, $a0	# set $t6 to starting address of buffer.
+	# initialize $v0 and $v1.
+	move	$v0, $zero
+	move	$v1, $zero
 
-	# TODO: what is this supposed to do
-check_alpha:
+countStringLoop:
+	lb	$t7, ($t6) # load char into $t7
+	beq	$t7, '\0', countStringLoopEnd # end if char is NUL
+	beq	$t7, '\n', countStringLoopEnd # end if char is LF
+	addiu	$t6, $t6, 1 # shift address by 1 byte.
+	j countStringLoop
+countStringLoopEnd:
+	# the length is the ending address minus the starting address.
+	sub	$t2, $t6, $a0
+	sub	$t2, $t2, 1 # subtract one so we get 0 at the ones place.
+
+str2intLoop:
+	lb	$t0, 0($a0) # load the next char into $t0
+	lb	$t1, 1($a0) # load the next-next char into $t1
+	bgt	$t0, '9', handleAlpha # if loaded char is greater than 9's ascii codepoint, it's an alphabet character.
+	sub	$t0, $t0, '0' # effectively turn ascii "0" into 0.
+	b	checkAndAdd
+handleAlpha:
+	sub $t0, $t0, 55 # ('F'-15 = 55) effectively turn ascii "F" into 15
+	# b	checkAndAdd	# nop, for consistency
+
+# check the validity, and if so add the value to $v1.
+checkAndAdd:
+	blt	$t0, 0, checkFailure	# all values below 0 is invalid.
+	bgt	$t0, 16, checkFailure	# all values above 15 is invalid.
+	bgt	$t0, $a1, checkFailure	# all values above the base is invalid.
+	move	$t3, $t2	# set $t3 to current index.
+
+addBaseLoop:
+	beqz	$t3, addBaseLoopEnd
+	# if we passed those checks, we can add it to the value.
+	mul	$t0, $t0, $a1	# multiply the value by the base by (index) times.
+	subi	$t3, $t3, 1
+	j	addBaseLoop
+
+addBaseLoopEnd:
+	add	$v1, $v1, $t0 # finally add the value to $v1.
+	j	endOrBump
+
+checkFailure:
+	li	$v0, 4
+	la	$a0, msg_illegal_char
+	syscall # print out an error message.
+	jr	$ra
+
+# check if the next char is \n or NUL. if so, return. if not, add 4 to $t0.
+endOrBump:
+	beq	$t1, '\n', endStr2int
+	beq	$t1, '\0', endStr2int
+	
+	addiu	$a0, $a0, 1	# bump $a0 by 1
+	subi	$t2, $t2, 1	# subtract index by 1
+	j	str2intLoop
+
+endStr2int:
+	li	$v0, 1	# if it reached this far it should be correct.
+	jr	$ra
 
 .end str2int
 
@@ -140,7 +213,7 @@ print2:
 
 # ----------
 # procedure: print10
-# desc: decimal to decimal
+# desc: decimal to decimal (??)
 # $a2 = the integer to print
 # return value: $v1 = $a2
 # -----------
@@ -176,28 +249,3 @@ print16:
 	# TODO
 
 .end print16
-
-# ----------
-# procedure: count_str_len
-# desc: count a string's length
-# Arguments:
-#   - $a0: starting location of the string buffer
-# Returns:
-#   - $v0: length of string
-# ----------
-count_str_len:
-	# copy starting address to $a1
-	move	$a1, $a0
-count_str_len_loop:
-	# load the starting byte to $t0
-	lb	$t0, ($a1)
-	# check if it is \n or NUL, if not we add 1; if so we branch.
-	beq	$t0, 10, count_str_len_end # 10 = \n (LF)
-	beq	$t0, 0, count_str_len_end # 0 = \0 (NUL)
-	# treat $a1 as an accumulator, add 1 when we reach here, then go back.
-	addi	$a1, $a1, 1
-	j	count_str_len_loop
-count_str_len_end:
-	# the final length of the string is the value of $a1 (end value) minus $a0 (starting value)
-	sub	$v0, $a1, $a0
-	jr	$ra
