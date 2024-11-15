@@ -32,7 +32,6 @@ main:
 	syscall
 
 prompt_base:
-	# TODO:
 	# prompt to user to input base between 2 and 16
 	la	$a0, promptBase
 	li	$v0, 4
@@ -77,11 +76,7 @@ print_enterNo:
 	move	$a1, $s0
 	jal	str2int
 	
-	# print out data to check
-	# TODO: DELETE ME
-	li	$v0, 1
-	move	$a0, $v1
-	syscall
+	# check if $v0 is 0 (incorrect) or 1 (correct)
 
 	# initialize register (??)
 	#li $t0, 0
@@ -98,20 +93,14 @@ continue:
 	syscall
 
 	bne	$v0, 'y', noty	 # 'y'
-	li	$a0, 10
-	li	$v0, 11
-	syscall
-	j	main
+	j	prompt_base
 
 noty:
-	bne	$v0, 'n', notn	# 'n'
 	la	$a0, end
 	li	$v0, 4
 	syscall
 	li	$v0, 10
 	syscall
-notn:
-	j	prompt_base
 
 .end main
 
