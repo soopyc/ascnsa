@@ -1,4 +1,95 @@
+# ----------------------------------
+# Data Segment
+.data
+msg:	.asciiz	" Info: this program is to convert a number from any base (between 2 and 16) to binary, octal, decimal and hexadecimal number\n"
 
+promptBase:	.asciiz "\n Enter any base between 2 and 16: "
+promptNumb:	.asciiz "\n Enter a number: "
+
+msgWrong:	.asciiz "\n Each digit should be between 0 and "
+
+ansBin:	.asciiz "\tConvert it to Bin: "
+ansDec:	.asciiz "\tConvert it to Dec: "
+ansOct:	.asciiz "\tConvert it to Oct: "
+ansHex:	.asciiz "\tConvert it to Hex: "
+comp:	.asciiz "\n Do you wanna continue (y/n)? "
+newLine:	.asciiz	"\n"
+end:	.asciiz "\n End\n"
+buffer:	.space	32
+bin_buffer: .space 32
+octBuffer: .space 32
+
+msg_invalid_base:	.asciiz "   The base must between 2 and 16! Please enter again!"
+msg_illegal_char:	.asciiz "	One of the characters is illegal for the base."
+
+# ----------------------------------
+# Text/Code Segment
+
+.text
+.globl main
+main:
+	la	$a0, msg
+	li	$v0, 4
+	syscall
+
+prompt_base:
+	# prompt to user to input base between 2 and 16
+	la	$a0, promptBase
+	li	$v0, 4
+	syscall
+
+	# read integer
+	li $v0, 5
+	syscall
+
+	# make $s0 = base
+	move $s0, $v0
+
+	# check if base is valid
+	bgt $s0, 16, outofRange_base
+	blt $s0, 2, outofRange_base
+
+	# if base is valid, then continue the code
+	j print_enterNo
+
+outofRange_base:
+	la $a0, msg_invalid_base	# prompt user input again
+	li $v0, 4
+	syscall
+
+	j prompt_base	# prompt user input again
+
+print_enterNo:
+
+	# TODO
+	la	$a0, promptNumb
+	li	$v0, 4
+	syscall
+
+	# read string
+	li $v0, 8
+	la $a0, buffer
+	li $a1, 32
+	syscall
+	
+	# call str2int
+	la	$a0, buffer
+	move	$a1, $s0
+	jal	str2int
+	
+	# check if $v0 is 0 (incorrect) or 1 (correct)
+	
+	# print result to check $v1 value (for checking only)
+	#li $v0, 1
+	#move $a0, $v1
+	#syscall
+
+	# copy $v1 to $t0
+	move $t0, $v1 # used in print8 function
+	# copy $v1 to $t1
+	move $s1, $v1 # used in print10 function
+	
+	# jump print2 
 	jal print2
 	# after print2 -> print8 -> print10 -> print16 -> continue
 	
@@ -116,9 +207,7 @@ endStr2int:
 # -----------
 .globl print2
 print2:
-
-	# TODO
-	# syscall for new line
+# syscall for new line
 	li $v0, 11
     	li $a0, 10
     	syscall
@@ -185,7 +274,7 @@ print8:
     	li $a0, 10
     	syscall
     	
-    	move $t0,$s0 	# move $s0 to $t0
+    	move $t0, $s0 # move $s0 to $t0
 dec2oct_convert:
 	beqz $t0, printOct_Result
 	
