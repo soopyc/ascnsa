@@ -165,8 +165,8 @@ handleAlpha:
 # check the validity, and if so add the value to $v1.
 checkAndAdd:
 	blt	$t0, 0, checkFailure	# all values below 0 is invalid.
-	bgt	$t0, 16, checkFailure	# all values above 15 is invalid.
-	bgt	$t0, $a1, checkFailure	# all values above the base is invalid.
+	bge	$t0, 16, checkFailure	# all values above 15 is invalid.
+	bge	$t0, $a1, checkFailure	# all values above the base is invalid.
 	move	$t3, $t2	# set $t3 to current index.
 
 addBaseLoop:
