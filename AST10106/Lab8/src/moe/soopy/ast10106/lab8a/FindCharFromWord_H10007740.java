@@ -3,6 +3,7 @@ package moe.soopy.ast10106.lab8a;
 import java.util.Scanner;
 
 public class FindCharFromWord_H10007740 {
+
 	public static void main(String[] args) {
 		// initialize scanner
 		Scanner scanner = new Scanner(System.in);
@@ -15,10 +16,12 @@ public class FindCharFromWord_H10007740 {
 		for (String findee : original.split(" ")) { // split the string with spaces.
 			// for each string `findee`, check if it contains a characrer `finder`.
 			// if it exists, print it out.
-			if (findee.toLowerCase().contains(Character.toString(finder))) {
+			if (findee.toLowerCase().contains(Character.toString(finder).toLowerCase())) {
 				System.out.printf("%s ", findee);
 			}
 		}
+
+		// release resources
 		scanner.close();
 	}
 }
