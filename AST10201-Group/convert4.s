@@ -71,16 +71,16 @@ print_enterNo:
 	# read string
 	li $v0, 8
 	la $a0, buffer
-	li $a1, 32
+	li $a1, 31 # this has to be 31 because we might overwrite memory.
 	syscall
-	
+
 	# call str2int
 	la	$a0, buffer
 	move	$a1, $s0
 	jal	str2int
-	
+
 	# check if $v0 is 0 (incorrect) or 1 (correct)
-	
+
 	# print result to check $v1 value (for checking only)
 	#li $v0, 1
 	#move $a0, $v1
@@ -91,12 +91,12 @@ print_enterNo:
 	# copy $v1 to $t1
 	move $s1, $v1 # used in print10 function
 
-	
-	# jump print2 
+
+	# jump print2
 	jal print2
 	# after print2 -> print8 -> print10 -> print16 -> continue
-	
-	
+
+
 # this step prompts the user if they want to restart the entire thing.
 continue:
 	la	$a0, comp	# show string repeat
@@ -125,7 +125,7 @@ noty:
 # input: $a1 = base
 #  temp: $t0 = character to be checked and added to $v1.
 #  temp: $t1 = the next character after $t0.
-#  temp: $t2 = sometimes mutated main current index 
+#  temp: $t2 = sometimes mutated main current index
 #  temp: $t3 = often-mutated current index for adding to the value in the addBaseLoop label.
 #  temp: $t6 = count string length: address of buffer
 #  temp: $t7 = count string length: temporary storage of current character.
@@ -143,7 +143,7 @@ str2int:
 
 countStringLoop:
 	lb	$t7, ($t6) # load char into $t7
-	beq	$t7, '\0', countStringLoopEnd # end if char is NUL
+	beq	$t7, 0, countStringLoopEnd # end if char is NUL
 	beq	$t7, '\n', countStringLoopEnd # end if char is LF
 	addiu	$t6, $t6, 1 # shift address by 1 byte.
 	j countStringLoop
@@ -173,7 +173,7 @@ addBaseLoop:
 	beqz	$t3, addBaseLoopEnd
 	# if we passed those checks, we can add it to the value.
 	mul	$t0, $t0, $a1	# multiply the value by the base by (index) times.
-	subi	$t3, $t3, 1
+	addi	$t3, $t3, -1
 	j	addBaseLoop
 
 addBaseLoopEnd:
@@ -190,10 +190,10 @@ checkFailure:
 # check if the next char is \n or NUL. if so, return. if not, add 4 to $t0.
 endOrBump:
 	beq	$t1, '\n', endStr2int
-	beq	$t1, '\0', endStr2int
-	
+	beq	$t1, 0, endStr2int
+
 	addiu	$a0, $a0, 1	# bump $a0 by 1
-	subi	$t2, $t2, 1	# subtract index by 1
+	addi	$t2, $t2, -1	# subtract index by 1
 	j	str2intLoop
 
 endStr2int:
@@ -212,53 +212,46 @@ endStr2int:
 print2:
 # syscall for new line
 	li $v0, 11
-    	li $a0, 10
-    	syscall
-    	
+	li $a0, 10
+	syscall
+
 	li	$t1,0		#$t1 = index
-	la	$t2,bin_buffer	#$t2 = buffer	
-	
-	
+	la	$t2,bin_buffer	#$t2 = buffer
+
 	move 	$s0,$t0 # move $t0 to $s0
-	
-		
-convert_loop:	
+
+convert_loop:
 	# if $t0 =0 , jump to print_loop
 	beqz	$t0,print_msg
 	li	$t3,2		#$t3=2
 	div	$t0,$t0,$t3	#$t0=$t0/$t3
 	mfhi	$t4		#$t4 = remaindar
 	sb	$t4,0($t2)	#store remaindar to buffer
-	addi	$t2,$t2,1	#move to next	
+	addi	$t2,$t2,1	#move to next
 	addi	$t1,$t1,1	#index +1
 	j	convert_loop
-	
 
-print_msg:	
+
+print_msg:
 # print ansBin message
 	la	$a0, ansBin
 	li	$v0, 4
 	syscall
-	
-	
+
 print_loop:
-	# print inverse	
+	# print inverse
 	# if $t1 =0 ,jump to print 8
 	beqz	$t1,jump
-	lb	$a0,-1($t2)	#load byte from buffer 
+	lb	$a0,-1($t2)	#load byte from buffer
 	addi	$a0,$a0,48	#change to '0' and '1'	from decimal to char by add 48
 	li	$v0,11		#syscall print char
 	syscall
-	subi	$t2,$t2,1	#move to next 
-	subi	$t1,$t1,1	#index -1
+	addi	$t2,$t2,-1	#move to next
+	addi	$t1,$t1,-1	#index -1
 	j	print_loop
-	
 
-
-	
-    	
- jump:   	
-    	# jump print8 function
+jump:
+	# jump print8 function
 	j print8
 
 .end print2
@@ -271,16 +264,16 @@ print_loop:
 .globl print8
 print8:
 	la $t3, octBuffer # load address of octBuffer
-	
+
 	# syscall for new line
 	li $v0, 11
-    	li $a0, 10
-    	syscall
-    	
-    	move $t0, $s0 # move $s0 to $t0
+	li $a0, 10
+	syscall
+
+	move $t0, $s0 # move $s0 to $t0
 dec2oct_convert:
 	beqz $t0, printOct_Result
-	
+
 	div $t1, $t0, 8	 	# $t0 divide by 8 and store result in $t1
 	mfhi $t2			# move the remainder to $t2
 	addi $t2	, $t2, '0' 	# convert digit to ascii character
@@ -288,28 +281,28 @@ dec2oct_convert:
 	addi $t3, $t3, 1        	# add 1 in buffer to read next character
 	move $t0, $t1          	# update decimal number with quotient
 	j dec2oct_convert
-	
+
 printOct_Result:
 	li $v0, 4                 # syscall for print string
-   	la $a0, ansOct            # load address of result message into $a0
-    	syscall                   # make the syscall
-    	
-    	# Print the octal number in reverse order
-    	li $v0, 4                 # syscall for print string
-    	sub $t3, $t3, 1          # last stored character
-	
+	la $a0, ansOct            # load address of result message into $a0
+	syscall                   # make the syscall
+
+	# Print the octal number in reverse order
+	li $v0, 4                 # syscall for print string
+	sub $t3, $t3, 1          # last stored character
+
 reverse_loop:
-    	lb $a0, 0($t3)            # load byte from buffer into $a0
-    	beqz $a0, print10      	 # if null, then jump to print10
-    	
-    	 # print character
-    	li $v0, 11               
-    	syscall               
-    	 # move to previous character
-    	sub $t3, $t3, 1       
-    	# jump reverse_loop
-    	j reverse_loop             
-	
+	lb $a0, 0($t3)            # load byte from buffer into $a0
+	beqz $a0, print10      	 # if null, then jump to print10
+
+	# print character
+	li $v0, 11
+	syscall
+	# move to previous character
+	sub $t3, $t3, 1
+	# jump reverse_loop
+	j reverse_loop
+
 
 .end print8
 
@@ -322,20 +315,20 @@ print10:
 
 	# syscall print new line
 	li $v0, 11
-    	li $a0, 10
-    	syscall
-    	
-    	# print ansDec message
-	li $v0, 4                
-   	la $a0, ansDec            
-    	syscall    
-    	
-    	li $v0, 1            # syscall for print string
-   	move $a0, $s1          # load address of result message into $a0
-    	syscall   
-    	
-     	j print16
-	
+	li $a0, 10
+	syscall
+
+	# print ansDec message
+	li $v0, 4
+	la $a0, ansDec
+	syscall
+
+	li $v0, 1            # syscall for print string
+	move $a0, $s1          # load address of result message into $a0
+	syscall
+
+	j print16
+
 
 .end print10
 
@@ -352,50 +345,50 @@ print16:
 
 	# syscall print new line
 	li $v0, 11
-    	li $a0, 10
-    	syscall
-    	
-    	#load hex buffer
-    	la $t5, hex_buffer
+	li $a0, 10
+	syscall
+
+	#load hex buffer
+	la $t5, hex_buffer
 	la $t6, hex_buffer
 	addi $t5, $t5, 30
-	
+
 	move $t0, $s1 #copy the integer to t0 register
 	move $t1, $t0
-	
+
 loop :
 	div $t1, $t1, 16 #divide user input number by 16
 	mfhi $t2 #pull remainder into t2
 	mflo $t1 #set t1 as quotient, replacing the old one
-	
-	la $t4, hex_digits #load initial address of ascii string to $t4 
-	add $t4, $t4, $t2 #increment address by remainder from 'mfhi' 
-	lb $t2, ($t4) #load the character from $t4 address into $t2 
+
+	la $t4, hex_digits #load initial address of ascii string to $t4
+	add $t4, $t4, $t2 #increment address by remainder from 'mfhi'
+	lb $t2, ($t4) #load the character from $t4 address into $t2
 	sb $t2, ($t5) #store into buffer
 	addi $t5, $t5, -1 #decrement index
-	
+
 	beqz $t1, print16e #if quotient reaches 0 (meaning end of decimal), go to print the result
 	b loop
 
-print16e: 
+print16e:
 	lb $t7, ($t6) #load value of $t6 address into $t7
 	beqz $t7, checkifzero #if $t7 is zero
-	
+
 	# print ansDec message
-	li $v0, 4                
-   	la $a0, ansHex           
-    	syscall    
-    	
+	li $v0, 4
+	la $a0, ansHex
+	syscall
+
 	li $v0, 4 #print value from register $t6 position
 	la $a0, ($t6)
 	syscall
-	
+
 	j continue
-	
-checkifzero: 
+
+checkifzero:
 	addi $t6, $t6, 1 #add 1 to address of $t6, skipping the leading zero
 	j print16e
-    	
+
 
 
 .end print16
