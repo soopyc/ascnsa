@@ -10,9 +10,9 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Metadata {
-	String name;
+	private String name;
 	// https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/OffsetDateTime.html
-	OffsetDateTime lastModified;
+	private OffsetDateTime lastModified;
 
 	public Metadata(String name, OffsetDateTime lastModified) {
 		this.name = name;

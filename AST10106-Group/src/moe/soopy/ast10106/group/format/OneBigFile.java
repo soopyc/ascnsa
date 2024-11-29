@@ -59,13 +59,14 @@ public class OneBigFile {
 		}
 		return metadata + "\n" + SEPARATOR + "\n" + records;
 	}
-	
+
 	/**
 	 * Load data from a file to the OneBigFile format.
 	 *
 	 * References:
-	 * - https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Files.html#readString(java.nio.file.Path,java.nio.charset.Charset)
-	 * - https://stackoverflow.com/a/326440
+	 * https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Files.html#readString(java.nio.file.Path,java.nio.charset.Charset)
+	 * https://stackoverflow.com/a/326440
+	 *
 	 * @param filename The filename to load the file from
 	 * @return the parsed and loaded OneBigFile format
 	 * @throws IOException
@@ -74,11 +75,12 @@ public class OneBigFile {
 		String data = Files.readString(Paths.get(filename));
 		return OneBigFile.parse(data);
 	}
-	
+
 	/**
 	 * Flush and write the data to a file.
+	 *
 	 * @param filename The filename to write the file to.
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public void write(String filename) throws IOException {
 		Files.writeString(Paths.get(filename), this.toString());
