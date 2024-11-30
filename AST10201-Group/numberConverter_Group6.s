@@ -6,8 +6,6 @@ msg:	.asciiz	" Info: this program is to convert a number from any base (between 
 promptBase:	.asciiz "\n Enter any base between 2 and 16: "
 promptNumb:	.asciiz "\n Enter a number: "
 
-msgWrong:	.asciiz "\n Each digit should be between 0 and "
-
 ansBin:	.asciiz "\tConvert it to Bin: "
 ansDec:	.asciiz "\tConvert it to Dec: "
 ansOct:	.asciiz "\tConvert it to Oct: "
