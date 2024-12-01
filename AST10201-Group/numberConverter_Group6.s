@@ -182,7 +182,7 @@ checkFailure:
 	li	$v0, 4
 	la	$a0, msg_illegal_char
 	syscall # print out an error message.
-	jr	$ra
+	j	continue
 
 
 # check if the next char is \n or NUL. if so, return. if not, add 4 to $t0.
