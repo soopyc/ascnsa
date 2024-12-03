@@ -62,13 +62,15 @@ public class Main {
 				break;
 			case "d":
 				// method();
+				break;		
+			case "e":
+				// method();
 				break;
 			case "z":
 				System.out.println("End! Goodbye!");
 				System.exit(0);
 
 			}
-
 		}
 	}
 
@@ -78,9 +80,8 @@ public class Main {
 		System.out.println("b. Show Record");
 		System.out.println("c. Find Cash Flow over Period of Time");
 		System.out.println("d. Tax Calculation");
-		System.out.println("e. Display Spe");
+		System.out.println("e. Display Spending Catergories");
 
 		System.out.println("z. Exit");
 	}
-
 }
