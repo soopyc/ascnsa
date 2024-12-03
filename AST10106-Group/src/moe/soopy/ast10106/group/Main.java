@@ -15,7 +15,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-
+		
 		// FOR TESTING ONLY.
 		// TODO: feel free to copy some of the code, but remember to delete this entire
 		// block for the main program.
@@ -44,7 +44,7 @@ public class Main {
 //			// TODO Auto-generated catch block
 //			System.err.println("Failed to save file.");
 //		}
-
+		
 		while (true) {
 			displayMenu();
 			System.out.print("What function do you need? ");
@@ -52,7 +52,7 @@ public class Main {
 			switch (button) {
 
 			case "a":
-				// method();
+				createRecord();
 				break;
 			case "b":
 				// method();
@@ -81,7 +81,15 @@ public class Main {
 		System.out.println("c. Find Cash Flow over Period of Time");
 		System.out.println("d. Tax Calculation");
 		System.out.println("e. Display Spending Catergories");
-
+		
 		System.out.println("z. Exit");
 	}
+	
+	public static void createRecord() {
+		// test
+		Record rec = new Record("expense", 12.0, "Beauty", LocalDate.now(), "test");
+		System.out.println(rec.toString());
+		System.out.println("no record");
+	}
+	
 }
