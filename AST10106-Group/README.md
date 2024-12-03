@@ -9,7 +9,8 @@ The tool include features such as:
 
 The program can handle personal accounting tasks such as:
 - record every day expense and income
-- calculate cash flow over a period of time
+- print out previously entered entries
+- display/find cash flow over a period of time
 - calculate tax
 - display spending categories and % of money spent on each
 

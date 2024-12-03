@@ -26,7 +26,7 @@ public class Metadata {
 	// name\nlastmodified
 	public static Metadata parse(String toBeParsed) {
 		String[] split = toBeParsed.split("\n");
-		
+
 		String name = split[0];
 		OffsetDateTime lastModifiedAt = OffsetDateTime.parse(split[1]);
 		boolean married = Boolean.parseBoolean(split[2]);
@@ -63,15 +63,15 @@ public class Metadata {
 	public boolean isMarried() {
 		return this.married;
 	}
-	
+
 	public void setMarriageStatus(boolean married) {
 		this.married = married;
 	}
-	
+
 	public int getChildrenCount() {
 		return this.children;
 	}
-	
+
 	public void setChildrenCount(int children) {
 		this.children = children;
 	}
