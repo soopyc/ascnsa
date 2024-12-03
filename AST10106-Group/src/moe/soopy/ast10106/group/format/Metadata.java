@@ -11,18 +11,27 @@ import java.time.format.DateTimeFormatter;
 
 public class Metadata {
 	private String name;
+	private boolean married;
+	private int children;
 	// https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/OffsetDateTime.html
 	private OffsetDateTime lastModified;
 
-	public Metadata(String name, OffsetDateTime lastModified) {
+	public Metadata(String name, OffsetDateTime lastModified, boolean married, int children) {
 		this.name = name;
 		this.lastModified = lastModified;
+		this.married = married;
+		this.children = children;
 	}
 
 	// name\nlastmodified
 	public static Metadata parse(String toBeParsed) {
 		String[] split = toBeParsed.split("\n");
-		return new Metadata(split[0], OffsetDateTime.parse(split[1]));
+		
+		String name = split[0];
+		OffsetDateTime lastModifiedAt = OffsetDateTime.parse(split[1]);
+		boolean married = Boolean.parseBoolean(split[2]);
+		int children = Integer.parseInt(split[3]);
+		return new Metadata(name, lastModifiedAt, married, children);
 	}
 
 	// update lastModified timestamp.
@@ -51,8 +60,24 @@ public class Metadata {
 		this.update();
 	}
 
+	public boolean isMarried() {
+		return this.married;
+	}
+	
+	public void setMarriageStatus(boolean married) {
+		this.married = married;
+	}
+	
+	public int getChildrenCount() {
+		return this.children;
+	}
+	
+	public void setChildrenCount(int children) {
+		this.children = children;
+	}
+
 	// serialize the format
 	public String toString() {
-		return String.format("%s\n%s", this.name, this.lastModified);
+		return String.format("%s\n%s\n%b\n%d\n", this.name, this.lastModified, this.married, this.children);
 	}
 }

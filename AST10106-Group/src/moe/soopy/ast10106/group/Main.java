@@ -20,9 +20,8 @@ public class Main {
 		try {
 			testFile = OneBigFile.load(FILENAME);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.err.println("Could not load file, creating a new one.");
-			testFile = new OneBigFile(new Metadata("Bob the Tester", OffsetDateTime.now()), null);
+			testFile = new OneBigFile(new Metadata("Bob the Tester", OffsetDateTime.now(), false, 0), null);
 			try {
 				testFile.write(FILENAME);
 			} catch (IOException e1) {
@@ -37,7 +36,6 @@ public class Main {
 		try {
 			testFile.write(FILENAME);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.err.println("Failed to save file.");
 		}
 	}
