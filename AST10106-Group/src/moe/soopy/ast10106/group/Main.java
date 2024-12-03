@@ -3,6 +3,7 @@ package moe.soopy.ast10106.group;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 
 import moe.soopy.ast10106.group.format.Metadata;
 import moe.soopy.ast10106.group.format.OneBigFile;
