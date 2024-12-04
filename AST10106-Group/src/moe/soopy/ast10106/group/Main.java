@@ -15,7 +15,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		
+
 		// FOR TESTING ONLY.
 		// TODO: feel free to copy some of the code, but remember to delete this entire
 		// block for the main program.
@@ -44,7 +44,8 @@ public class Main {
 //			// TODO Auto-generated catch block
 //			System.err.println("Failed to save file.");
 //		}
-		
+
+		// unfinished
 		while (true) {
 			displayMenu();
 			System.out.print("What function do you need? ");
@@ -62,7 +63,7 @@ public class Main {
 				break;
 			case "d":
 				// method();
-				break;		
+				break;
 			case "e":
 				// method();
 				break;
@@ -74,6 +75,7 @@ public class Main {
 		}
 	}
 
+	// unfinished
 	public static void displayMenu() {
 		System.out.println("Welcome!");
 		System.out.println("a. Record Daily Expnse and Income");
@@ -81,15 +83,34 @@ public class Main {
 		System.out.println("c. Find Cash Flow over Period of Time");
 		System.out.println("d. Tax Calculation");
 		System.out.println("e. Display Spending Catergories");
-		
+
 		System.out.println("z. Exit");
 	}
-	
+
+	// unfinished
 	public static void createRecord() {
-		// test
-		Record rec = new Record("expense", 12.0, "Beauty", LocalDate.now(), "test");
+		Scanner sc = new Scanner(System.in);
+		askRecordInfo();
+		System.out.println("It is a income or expense? ");
+		System.out.println("1: Income 2: Expense");
+		int checkIE = sc.nextInt();
+		String IE;
+
+		while (true) {
+			if (checkIE == 1) {
+				 IE = "income";
+				break;
+			} else if (checkIE == 2) {
+				 IE = "expense";
+				break;
+			}
+		}
+		Record rec = new Record(IE , 12.0, "Beauty", LocalDate.now(), "test");
+
 		System.out.println(rec.toString());
-		System.out.println("no record");
 	}
-	
+
+	public static void askRecordInfo() {
+
+	}
 }
