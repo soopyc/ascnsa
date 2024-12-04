@@ -90,27 +90,29 @@ public class Main {
 	// unfinished
 	public static void createRecord() {
 		Scanner sc = new Scanner(System.in);
+		String IE;
 		askRecordInfo();
 		System.out.println("It is a income or expense? ");
 		System.out.println("1: Income 2: Expense");
-		int checkIE = sc.nextInt();
-		String IE;
 
 		while (true) {
+			int checkIE = sc.nextInt();
 			if (checkIE == 1) {
-				 IE = "income";
+				IE = "income";
 				break;
 			} else if (checkIE == 2) {
-				 IE = "expense";
+				IE = "expense";
 				break;
+			} else {
+				System.out.print("Either 1 or 2: ");
 			}
 		}
-		Record rec = new Record(IE , 12.0, "Beauty", LocalDate.now(), "test");
+		Record rec = new Record(IE, 12.0, "Beauty", LocalDate.now(), "test");
 
 		System.out.println(rec.toString());
 	}
 
-	public static void askRecordInfo() {
-
-	}
+	public static void askRecordInfo(){}
+	
+	
 }
