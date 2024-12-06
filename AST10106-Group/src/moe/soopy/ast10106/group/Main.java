@@ -12,38 +12,33 @@ import moe.soopy.ast10106.group.format.Record;
 
 public class Main {
 	final static String FILENAME = "bmtool.obf";
+	static OneBigFile file;
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-
+		
 		// FOR TESTING ONLY.
 		// TODO: feel free to copy some of the code, but remember to delete this entire
 		// block for the main program.
 
-//		OneBigFile testFile;
-//		try {
-//			testFile = OneBigFile.load(FILENAME);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			System.err.println("Could not load file, creating a new one.");
-//			testFile = new OneBigFile(new Metadata("Bob the Tester", OffsetDateTime.now(), false,0), null);
-//			try {
-//				testFile.write(FILENAME);
-//			} catch (IOException e1) {
-//				System.err.println("Could not write to file.");
-//				return;
-//			}
-//		}
+		try {
+			file = OneBigFile.load(FILENAME);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Could not load file, creating a new one.");
+			file = new OneBigFile(new Metadata("Bob the Tester", OffsetDateTime.now(), false,0), null);
+			try {
+				file.write(FILENAME);
+			} catch (IOException e1) {
+				System.err.println("Could not write to file.");
+				return;
+			}
+		}
 //		System.out.printf("Last modified: %s\n", testFile.metadata.getLastModifiedPretty());
 //		testFile.records.add(new Record("income", 12.0, "Others", LocalDate.now(), "test"));
 //		testFile.metadata.update(); // call this whenever you update records.
 //
-//		try {
-//			testFile.write(FILENAME);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			System.err.println("Failed to save file.");
-//		}
+
 
 		// unfinished
 		while (true) {
@@ -107,12 +102,20 @@ public class Main {
 				System.out.print("Either 1 or 2: ");
 			}
 		}
-		Record rec = new Record(IE, 12.0, "Beauty", LocalDate.now(), "test");
-
+		Record rec = new Record(IE, 30.0, "Food", LocalDate.now(), "test");
+		file.addRecord(rec);
+		try {
+			file.write(FILENAME);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Failed to save file.");
+		}
+		
+		
 		System.out.println(rec.toString());
 	}
 
 	public static void askRecordInfo(){}
-	
+		
 	
 }
