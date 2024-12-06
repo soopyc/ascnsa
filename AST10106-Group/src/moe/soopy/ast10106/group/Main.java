@@ -46,7 +46,12 @@ public class Main {
 			System.out.print("What function do you need? ");
 			String button = sc.nextLine();
 			switch (button) {
-
+			case "1":
+				inputMetadata();
+				break;
+			case "2":
+				retrieveMetadata();
+				break;
 			case "a":
 				createRecord();
 				break;
@@ -69,7 +74,28 @@ public class Main {
 			}
 		}
 	}
-
+	public static void inputMetadata() {
+		Scanner sc = new Scanner(System.in);
+		String Name;
+		boolean Married;
+		int Children;
+		System.out.println("What is your name? ");
+		Name = sc.next();
+		file.metadata.setName(Name);
+		System.out.println("Are you married? Press 1 for yes and 2 for no");
+		Married = sc.next()== "1";
+		file.metadata.setMarriageStatus(Married);
+		System.out.println("How many children do you have?");
+		Children = sc.nextInt();
+		file.metadata.setChildrenCount(Children);
+	}
+	public static void retrieveMetadata() {
+		System.out.println("----------------------");
+		System.out.println("Name = " + file.metadata.getName());
+		System.out.println("Married? " + file.metadata.isMarried());
+		System.out.println("Number of Children: " + file.metadata.getChildrenCount());
+		System.out.println("----------------------");
+	}
 	// unfinished
 	public static void displayMenu() {
 		System.out.println("Welcome!");
