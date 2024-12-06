@@ -78,6 +78,6 @@ public class Metadata {
 
 	// serialize the format
 	public String toString() {
-		return String.format("%s\n%s\n%b\n%d\n", this.name, this.lastModified, this.married, this.children);
+		return String.format("%s\n%s\n%b\n%d", this.name, this.lastModified, this.married, this.children);
 	}
 }

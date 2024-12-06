@@ -61,6 +61,16 @@ public class OneBigFile {
 	}
 
 	/**
+	 * Add a new record to the records list.
+	 *
+	 * @param record the record to be added.
+	 */
+	public void addRecord(Record record) {
+		this.records.add(record);
+		this.metadata.update();
+	}
+
+	/**
 	 * Load data from a file to the OneBigFile format.
 	 *
 	 * References:
