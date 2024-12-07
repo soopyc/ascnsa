@@ -31,8 +31,6 @@ public class Main {
 			displayMenu();
 			char nextOperation = prompter.promptForString("What would you like to do?").charAt(0);
 			switch (nextOperation) {
-			case '1': 
-				inputMetadata();
 			case 'a':
 				createRecord();
 				break;
