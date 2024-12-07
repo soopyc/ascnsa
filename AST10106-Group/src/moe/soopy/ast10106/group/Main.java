@@ -21,6 +21,7 @@ public class Main {
 		} catch (IOException e) {
 			System.err.println("Could not load file, creating a new one.");
 			file = new OneBigFile(new Metadata("TEMPORARY DATA", OffsetDateTime.now(), false, 0), null);
+			inputMetadata();
 			saveFile();
 		}
 
