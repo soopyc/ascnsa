@@ -31,6 +31,8 @@ public class Main {
 			displayMenu();
 			char nextOperation = prompter.promptForString("What would you like to do?").charAt(0);
 			switch (nextOperation) {
+			case '1': 
+				inputMetadata();
 			case 'a':
 				createRecord();
 				break;
@@ -88,7 +90,7 @@ public class Main {
 	// unfinished
 	public static void displayMenu() {
 		System.out.println("Welcome!");
-		System.out.println("a. Record Daily Expnse and Income");
+		System.out.println("a. Record Daily Expeznse and Income");
 		System.out.println("b. Show Record");
 		System.out.println("c. Find Cash Flow over Period of Time");
 		System.out.println("d. Tax Calculation");
@@ -100,9 +102,12 @@ public class Main {
 		System.out.println("z. Save and Exit");
 	}
 
-	// unfinished
+	// finished
 	public static void createRecord() {
-		String IE;
+		String IE; 
+		double amount; 
+		String type; 
+		String notes;
 		askRecordInfo();
 		System.out.println("It is a income or expense? ");
 		System.out.println("1: Income 2: Expense");
@@ -119,7 +124,11 @@ public class Main {
 				System.out.println("Unknown input: please enter either 1 or 2.");
 			}
 		}
-		Record rec = new Record(IE, 30.0, "Food", LocalDate.now(), "test");
+		amount = prompter.promptForDouble("Please enter the price or amount");
+		type = prompter.promptForString("Please enter the type of record");
+		notes = prompter.promptForString("Please enter any notes or enter a space");		
+		
+		Record rec = new Record(IE, amount, type, LocalDate.now(), notes);
 		file.addRecord(rec);
 		saveFile();
 
