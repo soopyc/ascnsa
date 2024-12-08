@@ -63,6 +63,7 @@ public class Prompter {
 				return this.numberScanner.nextInt();
 			} catch (InputMismatchException e) {
 				System.err.println("Invalid input: input is not an integer.");
+				this.numberScanner.nextLine(); //clear scanner to avoid looping
 			}
 		}
 	}
@@ -80,6 +81,7 @@ public class Prompter {
 				return this.numberScanner.nextDouble();
 			} catch (InputMismatchException e) {
 				System.err.println("Invalid input: input is not an integer.");
+				this.numberScanner.nextLine(); //clear scanner to avoid looping
 			}
 		}
 	}
