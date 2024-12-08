@@ -55,4 +55,7 @@ public class Record {
 		return String.format("%s|%s|%f|%s|%s|%s", this.id, this.type, this.amount, this.category, this.date,
 				this.notes);
 	}
+	public String getType() {
+	return this.type;
+	}
 }
