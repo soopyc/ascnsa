@@ -3,6 +3,7 @@ package moe.soopy.ast10106.group;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Scanner;
 
 import moe.soopy.ast10106.group.format.Metadata;
 import moe.soopy.ast10106.group.format.OneBigFile;
@@ -36,7 +37,7 @@ public class Main {
 				createRecord();
 				break;
 			case 'b':
-				// method();
+				showRecord();
 				break;
 			case 'c':
 				// method();
@@ -46,6 +47,9 @@ public class Main {
 				break;
 			case 'e':
 				// method();
+				break;
+			case 'f':
+				mpf();
 				break;
 			case 't':
 				retrieveMetadata();
@@ -58,7 +62,7 @@ public class Main {
 				prompter.cleanup();
 				saveFile();
 				return;
-				
+
 			default:
 				System.err.println("Error: invalid option.");
 			}
@@ -94,7 +98,7 @@ public class Main {
 		System.out.println("c. Find Cash Flow over Period of Time");
 		System.out.println("d. Tax Calculation");
 		System.out.println("e. Display Spending Catergories");
-
+		System.out.println("f. Calculate net salary based on the MPF system");
 		System.out.println("t. Show personal particulars");
 		System.out.println("u. Update personal particulars");
 
@@ -103,9 +107,9 @@ public class Main {
 
 	// finished
 	public static void createRecord() {
-		String IE; 
-		double amount; 
-		String type; 
+		String IE;
+		double amount;
+		String type;
 		String notes;
 		askRecordInfo();
 		System.out.println("It is a income or expense? ");
@@ -125,11 +129,11 @@ public class Main {
 		}
 		amount = prompter.promptForDouble("Please enter the price or amount");
 		type = prompter.promptForString("Please enter the type of record");
-		notes = prompter.promptForString("Please enter any notes or enter a space");		
-		
+		notes = prompter.promptForString("Please enter any notes or enter a space");
+
 		Record rec = new Record(IE, amount, type, LocalDate.now(), notes);
 		file.addRecord(rec);
-		saveFile();
+		// saveFile();
 
 		System.out.println(rec.toString());
 	}
@@ -143,5 +147,61 @@ public class Main {
 		} catch (IOException e) {
 			System.err.println("Failed to save file.");
 		}
+	}
+
+	public static void showRecord() {
+		System.out.println("Nothing here yet");
+	}
+	
+	// finished 
+	public static void mpf() {
+		Scanner sc = new Scanner(System.in);
+		int detM;
+		double salary;
+		double afterMpfSal = -1;
+		System.out.println("-----------------------------------------------------------");
+		System.out.println("Here can help you to calculate the Net Salary after the Mandatory Provident Fund.");
+		System.out.println("Are you monthly paid OR non-monthly paid?");
+		System.out.println("1. Monthly Paid \t2. Non-monthly Paid");
+
+		while (true) {
+			detM = sc.nextInt();
+			if (detM == 1 || detM == 2)
+				break;
+			else
+				System.out.println("Please enter 1 or 2 only.");
+		}
+
+		if (detM == 1) {
+			System.out.println("What is your monthly salary?");
+			salary = sc.nextDouble();
+			if (salary < 7100) {
+				afterMpfSal = salary;
+				System.out.println("No contribution needed based on your weekly paid.");
+			} else if (salary < 30000 && salary >= 7100) {
+				afterMpfSal = salary - (salary * 0.05);
+				System.out.println("You need to contribute 5% of your salary.");
+			} else if (salary >= 30000) {
+				afterMpfSal = salary - 1500;
+				System.out.println("You need to contribute $1500 of your salary.");
+			}
+
+		} else if (detM == 2) {
+			System.out.println("What is your weekly salary?");
+			salary = sc.nextDouble();
+			if (salary < 1960) {
+				afterMpfSal = salary;
+				System.out.println("No contribution needed based on your weekly paid.");
+			} else if (salary >= 1960) {
+				System.out.println("You need to contribute 5% of your salary");
+				afterMpfSal = salary - (salary * 0.05);
+			}
+
+		}
+		System.out.println("-----------------------------------------------------------");
+		System.out.println("\t  MPF net salary Report");
+		System.out.printf("\nYour Weekly or Monthly Net Salary: $%.2f\n", afterMpfSal);
+		System.out.println("-----------------------------------------------------------");
+
 	}
 }
