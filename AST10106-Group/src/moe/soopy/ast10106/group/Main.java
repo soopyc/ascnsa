@@ -43,7 +43,7 @@ public class Main {
 				// method();
 				break;
 			case 'd':
-				// method();
+				//SalariesTaxCalculate object = new SalariesTaxCalculate();
 				break;
 			case 'e':
 				// method();

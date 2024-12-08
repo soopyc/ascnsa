@@ -31,19 +31,20 @@ public class SalariesTaxCalculate {
 
 	static OneBigFile file;
 
-	public double totalincome = 0.0;// modifiable
-	public double totaldeductions = 0.0;// modifiable
-	public double Nettaxableincome = 0.0;// modifiable
-	public double Netincome = 0.0;// modifiable
-	public double realIncome = 0.0;// modifiable
+	public double totalincome = 0.0;
+	public double totaldeductions = 0.0;
+	public double Nettaxableincome = 0.0;
+	public double Netincome = 0.0;
+	public double realIncome = 0.0;
 
-	// create main object here
-	// Main object = new Main();
-
+	// Get record in past one year,and Make up one year's record
+	
+	
+	
 	// get current date and time
 	LocalDateTime now = LocalDateTime.now();
 
-	// get date and time past a year
+	// get date and time in past a year
 	LocalDateTime minusYear = now.minusYears(1);
 
 	public SalariesTaxCalculate(double totalincome) {
