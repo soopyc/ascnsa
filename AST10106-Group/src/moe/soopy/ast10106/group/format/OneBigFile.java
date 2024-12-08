@@ -69,6 +69,15 @@ public class OneBigFile {
 		this.records.add(record);
 		this.metadata.update();
 	}
+	public String getType(String type) {
+		String records = "";
+		for (Record record: this.records) {
+			if (record.getType().equals(type)) {
+				records += record.toString() + "\n";
+			}
+		}
+		return records;
+	}
 
 	/**
 	 * Load data from a file to the OneBigFile format.
