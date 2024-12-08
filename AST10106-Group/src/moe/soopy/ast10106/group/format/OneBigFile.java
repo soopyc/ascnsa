@@ -69,12 +69,21 @@ public class OneBigFile {
 		this.records.add(record);
 		this.metadata.update();
 	}
+
 	public String getType(String type) {
 		String records = "";
-		for (Record record: this.records) {
+		for (Record record : this.records) {
 			if (record.getType().equals(type)) {
 				records += record.toString() + "\n";
 			}
+		}
+		return records;
+	}
+
+	public String getRecord() {
+		String records = "";
+		for (Record record : this.records) {
+			records += record.splitID() + "\n";
 		}
 		return records;
 	}

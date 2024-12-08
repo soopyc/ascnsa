@@ -150,7 +150,11 @@ public class Main {
 	}
 
 	public static void showRecord() {
-		System.out.println("Nothing here yet");
+		System.out.println("\t\t        Income and Expense Records");
+		System.out.println("---------------------------------------------------------------------------");
+		System.out.printf("\n  ID \t Income\\Expsense    Amount   Categoirse       Date       Note\n");
+		System.out.println("---------------------------------------------------------------------------");
+		System.out.println(file.getRecord());
 	}
 
 	public static void showfilewithFilter() {

@@ -55,7 +55,21 @@ public class Record {
 		return String.format("%s|%s|%f|%s|%s|%s", this.id, this.type, this.amount, this.category, this.date,
 				this.notes);
 	}
+
+	
+	public String splitID() {
+		String[] splitStrId = this.id.split("-");
+		String fsSecId;
+		if (splitStrId.length > 0) {
+			fsSecId = splitStrId[0]; // before: 8d4e552f-0c51-485f-be0a-ece0bb3f877b after: splitStrId[0]: 8d4e552f
+		} else {
+			fsSecId = "";
+		}
+		return String.format("%s|%15s|%10.2f|%10s|%15s|%10s", fsSecId, this.type, this.amount, this.category, this.date,
+				this.notes);
+	}
+
 	public String getType() {
-	return this.type;
+		return this.type;
 	}
 }
