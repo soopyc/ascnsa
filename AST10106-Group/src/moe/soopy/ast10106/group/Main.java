@@ -46,7 +46,7 @@ public class Main {
 				//SalariesTaxCalculate object = new SalariesTaxCalculate();
 				break;
 			case 'e':
-				// method();
+				showfilewithFilter();
 				break;
 			case 'f':
 				mpf();
@@ -151,6 +151,23 @@ public class Main {
 
 	public static void showRecord() {
 		System.out.println("Nothing here yet");
+	}
+
+	public static void showfilewithFilter() {
+		int c = prompter.promptForInteger("Please type 1 for income and 2 for expenses");
+		while(true)
+		if(c == 1) {
+			System.out.println(file.getType("income"));
+			break;
+			}
+		else if (c == 2) {
+			System.out.println(file.getType("expense"));
+			break;
+			}
+		else {
+			System.out.println("Please input again");
+			c = prompter.promptForInteger("Please type 1 for income and 2 for expenses");
+		}
 	}
 	
 	// finished 
