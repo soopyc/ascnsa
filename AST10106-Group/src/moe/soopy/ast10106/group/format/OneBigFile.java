@@ -71,11 +71,16 @@ public class OneBigFile {
 		this.metadata.update();
 	}
 
-	public String getRecordsByType(String type) {
-		String records = "";
+	/**
+	 * Get a list of records by income/expense type.
+	 * @param type the type to get records for.
+	 * @return a list of records matching the requested type.
+	 */
+	public ArrayList<Record> getRecordsByType(String type) {
+		ArrayList<Record> records = new ArrayList<Record>();
 		for (Record record : this.records) {
-			if (record.getType().equals(type)) {
-				records += record.toString() + "\n";
+			if (record.type.equals(type)) {
+				records.add(record);
 			}
 		}
 		return records;
@@ -84,7 +89,7 @@ public class OneBigFile {
 	public double getAmountByType(String type) {
 		double amounts = 0.0;
 		for (Record record : this.records) {
-			if (record.getType().equals(type)) {
+			if (record.type.equals(type)) {
 				amounts += record.amount;
 			}
 		}
@@ -94,7 +99,7 @@ public class OneBigFile {
 	public LocalDate getEarliestDateByType(String type) {
 		LocalDate date = LocalDate.now();
 		for (Record currentRecord : this.records) {
-			if (currentRecord.getType().equals(type) && currentRecord.date.isBefore(date)) {
+			if (currentRecord.type.equals(type) && currentRecord.date.isBefore(date)) {
 				date = currentRecord.date;
 			}
 		}

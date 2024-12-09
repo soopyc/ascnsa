@@ -72,9 +72,5 @@ public class Record {
 		return String.format("%s|%15s|%10.2f|%10s|%15s|%10s", fsSecId, this.type, this.amount, this.category, this.date,
 				this.notes);
 	}
-
-	public String getType() {
-		return this.type;
-	}
 	
 }
