@@ -43,7 +43,9 @@ public class Main {
 				// method();
 				break;
 			case 'd':
-				//SalariesTaxCalculate object = new SalariesTaxCalculate();
+				SalariesTaxCalculate st = new SalariesTaxCalculate(
+						(file.getAmountByType("income") - file.getAmountByType("expense")),
+						file.getEarliestDateByType("income"));
 				break;
 			case 'e':
 				showfilewithFilter();
@@ -159,22 +161,20 @@ public class Main {
 
 	public static void showfilewithFilter() {
 		int c = prompter.promptForInteger("Please type 1 for income and 2 for expenses");
-		while(true)
-		if(c == 1) {
-			System.out.println(file.getType("income"));
-			break;
+		while (true)
+			if (c == 1) {
+				System.out.println(file.getRecordsByType("income"));
+				break;
+			} else if (c == 2) {
+				System.out.println(file.getRecordsByType("expense"));
+				break;
+			} else {
+				System.out.println("Please input again");
+				c = prompter.promptForInteger("Please type 1 for income and 2 for expenses");
 			}
-		else if (c == 2) {
-			System.out.println(file.getType("expense"));
-			break;
-			}
-		else {
-			System.out.println("Please input again");
-			c = prompter.promptForInteger("Please type 1 for income and 2 for expenses");
-		}
 	}
-	
-	// finished 
+
+	// finished
 	public static void mpf() {
 		Scanner sc = new Scanner(System.in);
 		int detM;

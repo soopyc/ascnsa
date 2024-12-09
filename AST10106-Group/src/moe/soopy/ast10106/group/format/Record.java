@@ -18,6 +18,7 @@ public class Record {
 	public String category; // modifiable
 	public LocalDate date; // modifiable
 	public String notes; // modifiable
+	
 
 	public Record(String id, String type, double amount, String category, LocalDate date, String notes) {
 		this.id = id;
@@ -56,8 +57,11 @@ public class Record {
 				this.notes);
 	}
 
-	
-	public String splitID() {
+	/**
+	 * format the record in pretty string
+	 * @return format at string
+	 */
+	public String getPrettyRecord() {
 		String[] splitStrId = this.id.split("-");
 		String fsSecId;
 		if (splitStrId.length > 0) {
@@ -72,4 +76,5 @@ public class Record {
 	public String getType() {
 		return this.type;
 	}
+	
 }

@@ -6,7 +6,8 @@ package moe.soopy.ast10106.group;
 
 import moe.soopy.ast10106.group.format.Metadata;
 import moe.soopy.ast10106.group.format.OneBigFile;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 // Date class , array list change to number
 public class SalariesTaxCalculate {
@@ -36,20 +37,26 @@ public class SalariesTaxCalculate {
 	public double Nettaxableincome = 0.0;
 	public double Netincome = 0.0;
 	public double realIncome = 0.0;
-
+	private LocalDate date;
 	// Get record in past one year,and Make up one year's record
-	
-	
-	
+
 	// get current date and time
-	LocalDateTime now = LocalDateTime.now();
+	LocalDate now = LocalDate.now();
 
 	// get date and time in past a year
-	LocalDateTime minusYear = now.minusYears(1);
+	LocalDate minusYear = now.minusYears(1);
 
-	public SalariesTaxCalculate(double totalincome) {
+	public SalariesTaxCalculate(double totalincome, LocalDate firstIncome) {
 		this.totalincome = totalincome;
+		this.date = firstIncome;
 
+	}
+
+	public void check_recordsDate() {
+		if (minusYear != date) {
+			
+		} else
+			totalincome = totalincome;
 	}
 
 	public double Netincome() {

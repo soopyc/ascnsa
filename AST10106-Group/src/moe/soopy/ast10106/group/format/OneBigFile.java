@@ -8,6 +8,7 @@ package moe.soopy.ast10106.group.format;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class OneBigFile {
@@ -70,7 +71,7 @@ public class OneBigFile {
 		this.metadata.update();
 	}
 
-	public String getType(String type) {
+	public String getRecordsByType(String type) {
 		String records = "";
 		for (Record record : this.records) {
 			if (record.getType().equals(type)) {
@@ -80,13 +81,35 @@ public class OneBigFile {
 		return records;
 	}
 
+	public double getAmountByType(String type) {
+		double amounts = 0.0;
+		for (Record record : this.records) {
+			if (record.getType().equals(type)) {
+				amounts += record.amount;
+			}
+		}
+		return amounts;
+	}
+
+	public LocalDate getEarliestDateByType(String type) {
+		LocalDate date = LocalDate.now();
+		for (Record currentRecord : this.records) {
+			if (currentRecord.getType().equals(type) && currentRecord.date.isBefore(date)) {
+				date = currentRecord.date;
+			}
+		}
+		return date;
+	}
+
 	public String getRecord() {
 		String records = "";
 		for (Record record : this.records) {
-			records += record.splitID() + "\n";
+			records += record.getPrettyRecord() + "\n";
 		}
 		return records;
 	}
+	
+
 
 	/**
 	 * Load data from a file to the OneBigFile format.
