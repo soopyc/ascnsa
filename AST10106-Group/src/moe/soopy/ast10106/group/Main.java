@@ -43,9 +43,8 @@ public class Main {
 				// method();
 				break;
 			case 'd':
-				SalariesTaxCalculate st = new SalariesTaxCalculate(
-						(file.getAmountByType("income") - file.getAmountByType("expense")),
-						file.getEarliestDateByType("income"));
+				SalariesTaxCalculate st = new SalariesTaxCalculate();
+				st.print_afterTaxIncome();
 				break;
 			case 'e':
 				showfilewithFilter();

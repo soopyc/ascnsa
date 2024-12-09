@@ -18,7 +18,6 @@ public class Record {
 	public String category; // modifiable
 	public LocalDate date; // modifiable
 	public String notes; // modifiable
-	
 
 	public Record(String id, String type, double amount, String category, LocalDate date, String notes) {
 		this.id = id;
@@ -59,6 +58,7 @@ public class Record {
 
 	/**
 	 * format the record in pretty string
+	 * 
 	 * @return format at string
 	 */
 	public String getPrettyRecord() {
@@ -72,5 +72,9 @@ public class Record {
 		return String.format("%s|%15s|%10.2f|%10s|%15s|%10s", fsSecId, this.type, this.amount, this.category, this.date,
 				this.notes);
 	}
-	
+
+	public double getCurrentAmount() {
+		return this.amount;
+	}
+
 }
