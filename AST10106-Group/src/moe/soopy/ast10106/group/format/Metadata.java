@@ -27,10 +27,10 @@ public class Metadata {
 	public static Metadata parse(String toBeParsed) {
 		String[] split = toBeParsed.split("\n");
 
-		String name = split[0];
-		OffsetDateTime lastModifiedAt = OffsetDateTime.parse(split[1]);
-		boolean married = Boolean.parseBoolean(split[2]);
-		int children = Integer.parseInt(split[3]);
+		String name = split[0].strip();
+		OffsetDateTime lastModifiedAt = OffsetDateTime.parse(split[1].strip());
+		boolean married = Boolean.parseBoolean(split[2].strip());
+		int children = Integer.parseInt(split[3].strip());
 		return new Metadata(name, lastModifiedAt, married, children);
 	}
 
