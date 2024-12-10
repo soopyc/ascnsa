@@ -26,6 +26,7 @@ public class SalariesTaxCalculate {
 	OneBigFile file;
 
 	public double totalincome = 0.0;
+	public double Tax_Exemption = 132000.0;
 	double[] salaryPerMonth;
 	boolean[] monthsWithSalary;
 
@@ -64,7 +65,7 @@ public class SalariesTaxCalculate {
 		for (double month : this.salaryPerMonth)
 			salaryAverage += month;
 		salaryAverage /= monthsWithSalaryRecords; // get the average salary per month with records
-		if (Double.isNaN(salaryAverage)) 
+		if (Double.isNaN(salaryAverage))
 			salaryAverage = 0;
 		// extrapolate predicted salary for the entire year
 		this.totalincome = salaryAverage * 12;
@@ -95,19 +96,17 @@ public class SalariesTaxCalculate {
 	 * 
 	 */
 	public double GetTaxInProgressive() {// calculate the salaries tax in Progressive growth rate
-
-		if (totalincome < 5000) {
-			return 0.0;
-		} else if (totalincome >= 5000) {
-			return 0.02 * 5000;
-		} else if (totalincome >= 10000) {
-			return 0.06 * 5000 + 0.02 * 5000;
-		} else if (totalincome >= 15000) {
-			return 0.1 * 5000 + 0.06 * 5000 + 0.02 * 5000;
-		} else if (totalincome >= 20000) {
-			return 0.14 * 5000 + 0.1 * 5000 + 0.06 * 5000 + 0.02 * 5000;
+		double ActualAmount = totalincome - Tax_Exemption;
+		if (ActualAmount < 50000) {
+			return (ActualAmount) * 0.02;
+		} else if (ActualAmount <= 100000) {
+			return 0.02 * 50000 + 0.06 * (ActualAmount - 50000);
+		} else if (ActualAmount <= 150000) {
+			return 0.02 * 50000 + 0.06 * 50000 + 0.1 * (ActualAmount - 100000);
+		} else if (ActualAmount <= 200000) {
+			return 0.1 * 50000 + 0.06 * 50000 + 0.02 * 50000 + 0.14 * (ActualAmount - 150000);
 		} else {
-			return 0.14 * 5000 + 0.1 * 5000 + 0.06 * 5000 + 0.02 * 5000 + 0.17 * (totalincome - 20000);
+			return 0.14 * 50000 + 0.1 * 50000 + 0.06 * 50000 + 0.02 * 50000 + 0.17 * (ActualAmount - 200000);
 		}
 	}
 
