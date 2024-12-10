@@ -77,7 +77,7 @@ public class Prompter {
 	public double promptForDouble(String prompt) {
 		while (true) {
 			try {
-				System.out.print("? " + prompt + " (integer) ");
+				System.out.print("? " + prompt + " (decimal value) ");
 				return this.numberScanner.nextDouble();
 			} catch (InputMismatchException e) {
 				System.err.println("Invalid input: input is not an integer.");

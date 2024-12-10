@@ -183,9 +183,10 @@ public class Main {
 		System.out.println("Info: Here can help you to calculate the Net Salary after the Mandatory Provident Fund.");
 		System.out.println("Are you monthly paid OR non-monthly paid?");
 
-		boolean detM = prompter.promptForBoolean("Paid monthly or not?");
+		System.out.println("Type 1 for monthly or 2 for weekly.");
+		int detM = prompter.promptForInteger("Paid monthly or weekly?");
 
-		if (detM) {
+		if (detM == 1) {
 			salary = prompter.promptForDouble("What is your monthly salary?");
 			if (salary < 7100) {
 				afterMpfSal = salary;
@@ -198,7 +199,7 @@ public class Main {
 				System.out.println("You need to contribute $1500 of your salary.");
 			}
 
-		} else {
+		} else if (detM == 2) {
 			salary = prompter.promptForDouble("What is your weekly salary?");
 			if (salary < 1960) {
 				System.out.println("No contribution needed based on your weekly wage.");
@@ -207,6 +208,9 @@ public class Main {
 				System.out.println("You need to contribute 5% of your salary");
 				afterMpfSal = salary - (salary * 0.05);
 			}
+		} else {
+			System.out.println("Invalid input, please try again.");
+			return;
 		}
 		System.out.println("-----------------------------------------------------------");
 		System.out.println("\t  MPF net salary Report");
@@ -237,7 +241,7 @@ public class Main {
 
 		// Display results
 		System.out.println("-----------------------------------------------------------------------------");
-		System.out.printf("After %d years, you will get: $%.2f\n", totalYear, timeDepositResult);
+		System.out.printf("After %.1f years, you will get: $%.2f\n", totalYear, timeDepositResult);
 
 		// Calculate and display net earned in
 		double earned = timeDepositResult - principal;
@@ -246,11 +250,10 @@ public class Main {
 
 	}
 
-	// call by timeDeposit(), used to calculate the
+	// call by timeDeposit(), used to calculate and return the time deposit interest
 	public static double calTimeDeposit(double principal, double annualRate, double totalYear) {
 		// Formula reference (using method 1):
 		// https://www.wikihow.com/Calculate-Bank-Interest-on-Savings
-		double result = principal * Math.pow((1 + annualRate / totalYear), totalYear);
-		return result;
+		return principal * Math.pow((1 + annualRate / totalYear), totalYear);
 	}
 }
