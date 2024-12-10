@@ -11,7 +11,6 @@ import moe.soopy.ast10106.group.format.Record;
 import java.time.LocalDate;
 import java.util.UUID;
 
-// Date class , array list change to number
 public class SalariesTaxCalculate {
 	// Net taxable income = total income - total deductions - total tax exemptions.
 	// Net income = Total income - Total deductions. // standard tax rate
@@ -204,8 +203,6 @@ public class SalariesTaxCalculate {
 		System.out.printf("\n\tFile Number:%s \n\tIssue date:&s \n\tYour after-tax income is:%s \n",
 				UUID.randomUUID().toString(), date, afterTaxIncome);
 	}
-	// calculate the whole year salariesTax, then if the salaries is not record 12
-	// months, thus need to complement to 12 months
 
 }
 // only calculate one year salaries tax
