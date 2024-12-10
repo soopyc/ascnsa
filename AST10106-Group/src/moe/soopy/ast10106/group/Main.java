@@ -42,7 +42,8 @@ public class Main {
 				// method();
 				break;
 			case 'd':
-				st.print_afterTaxIncome();
+				st.calculateSalary();
+				st.run();
 				break;
 			case 'e':
 				showRecordsWithFilter();
