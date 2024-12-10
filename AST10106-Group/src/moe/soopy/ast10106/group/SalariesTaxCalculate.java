@@ -33,8 +33,9 @@ public class SalariesTaxCalculate {
 	public double afterTaxIncome = 0.0;
 	double[] months = new double[12];
 
-	// create object here
-	SalariesTaxCalculate callMethods = new SalariesTaxCalculate();
+	public SalariesTaxCalculate(OneBigFile file) {
+		this.file = file;
+	}
 
 	/**
 	 * check how many months records in total
@@ -43,7 +44,7 @@ public class SalariesTaxCalculate {
 		int count = 0;
 		int i = 0;// i equal to index of array
 		double amounts = 0.0;
-		for (Record rec : file.getRecordsByType("income")) {
+		for (Record rec : this.file.getRecordsByType("income")) {
 			/*
 			 * loop one time = one day ,then 30 days = one month,thus index of months add
 			 * one
@@ -85,7 +86,7 @@ public class SalariesTaxCalculate {
 	 */
 	public double makeUp_monthlyRecord() {
 		double sum = 0.0;
-		if (callMethods.check_elementOfMonths() == -1) {
+		if (this.check_elementOfMonths() == -1) {
 			for (double element : months) {
 				sum += element;
 			}
@@ -94,7 +95,7 @@ public class SalariesTaxCalculate {
 			for (double element : months) {
 				sum += element;
 			}
-			sum = 12 * (sum / callMethods.check_elementOfMonths() + 1);
+			sum = 12 * (sum / check_elementOfMonths() + 1);
 		}
 
 		return totalincome = sum;
@@ -155,7 +156,7 @@ public class SalariesTaxCalculate {
 									 * standard rate
 									 */
 
-		if (file.metadata.isMarried() == false
+		if (this.file.metadata.isMarried() == false
 				&& totalincome >= 2022000) {/*
 											 * case single and total income over the Preferential tax rate
 											 */
@@ -166,24 +167,28 @@ public class SalariesTaxCalculate {
 			 * rate
 			 */
 
-		else if (file.metadata.isMarried() == true && file.metadata.getChildrenCount() == 0 && totalincome >= 3144000) {
+		else if (this.file.metadata.isMarried() == true && this.file.metadata.getChildrenCount() == 0
+				&& totalincome >= 3144000) {
 			afterTaxIncome = Netincome;
 		} /*
 			 * case married ,have one child and annual income over the Preferential tax rate
 			 */
-		else if (file.metadata.isMarried() == true && file.metadata.getChildrenCount() == 1 && totalincome >= 4249000) {
+		else if (this.file.metadata.isMarried() == true && this.file.metadata.getChildrenCount() == 1
+				&& totalincome >= 4249000) {
 			afterTaxIncome = Netincome;
 		} /*
 			 * case married ,have two children and annual income over the Preferential tax
 			 * rate
 			 */
-		else if (file.metadata.isMarried() == true && file.metadata.getChildrenCount() == 2 && totalincome >= 5708000) {
+		else if (this.file.metadata.isMarried() == true && this.file.metadata.getChildrenCount() == 2
+				&& totalincome >= 5708000) {
 			afterTaxIncome = Netincome;
 		} /*
 			 * case married ,have three children and annual income over the Preferential tax
 			 * rate
 			 */
-		else if (file.metadata.isMarried() == true && file.metadata.getChildrenCount() == 3 && totalincome >= 7918000) {
+		else if (this.file.metadata.isMarried() == true && this.file.metadata.getChildrenCount() == 3
+				&& totalincome >= 7918000) {
 			afterTaxIncome = Netincome;
 		}
 

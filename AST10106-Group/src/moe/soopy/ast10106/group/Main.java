@@ -26,7 +26,7 @@ public class Main {
 		}
 
 		System.out.printf("Last modified: %s\n", file.metadata.getLastModifiedPretty());
-
+		SalariesTaxCalculate st = new SalariesTaxCalculate(file);
 		// TODO: unfinished
 		while (true) {
 			displayMenu();
@@ -42,10 +42,7 @@ public class Main {
 				// method();
 				break;
 			case 'd':
-				// seems not working yet, so i commented. (ivan)
-
-				// SalariesTaxCalculate st = new SalariesTaxCalculate();
-				// st.print_afterTaxIncome();
+				st.print_afterTaxIncome();
 				break;
 			case 'e':
 				showRecordsWithFilter();
