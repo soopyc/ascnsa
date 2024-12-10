@@ -171,8 +171,10 @@ public class SalariesTaxCalculate {
 
 		// get local time here
 		LocalDate date = LocalDate.now();
-		System.out.printf("\n\tFile Number:%s \n\tIssue date:%s \n\tYour salaries Tax is:%s \n",
-				UUID.randomUUID().toString(), date, this.calculateSalariesTax());
+		System.out.printf("\n\tFile Number:%s ", UUID.randomUUID().toString());
+		System.out.printf("\n\tIssue date:%s", date);
+		System.out.printf("\n\tYour salaries tax is:%s", this.calculateSalariesTax());
+		System.out.printf("\n\tYour annual net income is:%s\n", totalincome - this.calculateSalariesTax());
 	}
 
 }
