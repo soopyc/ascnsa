@@ -3,7 +3,6 @@ package moe.soopy.ast10106.group;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.Scanner;
 
 import moe.soopy.ast10106.group.format.Metadata;
 import moe.soopy.ast10106.group.format.OneBigFile;
@@ -44,12 +43,12 @@ public class Main {
 				break;
 			case 'd':
 				// seems not working yet, so i commented. (ivan)
-				
-				//SalariesTaxCalculate st = new SalariesTaxCalculate();
-				//st.print_afterTaxIncome();
+
+				// SalariesTaxCalculate st = new SalariesTaxCalculate();
+				// st.print_afterTaxIncome();
 				break;
 			case 'e':
-				showfilewithFilter();
+				showRecordsWithFilter();
 				break;
 			case 'f':
 				mpf();
@@ -100,7 +99,7 @@ public class Main {
 	public static void displayMenu() {
 		System.out.println("Welcome!");
 		System.out.println("a. Record Daily Expeznse and Income");
-		System.out.println("b. Show Record");
+		System.out.println("b. Show Records");
 		System.out.println("c. Find Cash Flow over Period of Time");
 		System.out.println("d. Tax Calculation");
 		System.out.println("e. Display Spending Catergories");
@@ -164,7 +163,7 @@ public class Main {
 		System.out.println(file.getRecord());
 	}
 
-	public static void showfilewithFilter() {
+	public static void showRecordsWithFilter() {
 		int c = prompter.promptForInteger("Please type 1 for income and 2 for expenses");
 		while (true)
 			if (c == 1) {
@@ -181,26 +180,16 @@ public class Main {
 
 	// finished
 	public static void mpf() {
-		Scanner sc = new Scanner(System.in);
-		int detM;
 		double salary;
 		double afterMpfSal = -1;
 		System.out.println("-----------------------------------------------------------");
 		System.out.println("Info: Here can help you to calculate the Net Salary after the Mandatory Provident Fund.");
 		System.out.println("Are you monthly paid OR non-monthly paid?");
-		System.out.println("1. Monthly Paid \t2. Non-monthly Paid");
 
-		while (true) {
-			detM = sc.nextInt();
-			if (detM == 1 || detM == 2)
-				break;
-			else
-				System.out.println("Please enter 1 or 2 only.");
-		}
+		boolean detM = prompter.promptForBoolean("Paid monthly or not?");
 
-		if (detM == 1) {
-			System.out.println("What is your monthly salary?");
-			salary = sc.nextDouble();
+		if (detM) {
+			salary = prompter.promptForDouble("What is your monthly salary?");
 			if (salary < 7100) {
 				afterMpfSal = salary;
 				System.out.println("No contribution needed based on your weekly paid.");
@@ -212,17 +201,15 @@ public class Main {
 				System.out.println("You need to contribute $1500 of your salary.");
 			}
 
-		} else if (detM == 2) {
-			System.out.println("What is your weekly salary?");
-			salary = sc.nextDouble();
+		} else {
+			salary = prompter.promptForDouble("What is your weekly salary?");
 			if (salary < 1960) {
+				System.out.println("No contribution needed based on your weekly wage.");
 				afterMpfSal = salary;
-				System.out.println("No contribution needed based on your weekly paid.");
 			} else if (salary >= 1960) {
 				System.out.println("You need to contribute 5% of your salary");
 				afterMpfSal = salary - (salary * 0.05);
 			}
-
 		}
 		System.out.println("-----------------------------------------------------------");
 		System.out.println("\t  MPF net salary Report");
@@ -234,22 +221,19 @@ public class Main {
 	// calculate the bank time deposit interest after user input the principal,
 	// annual interest rate, and duration
 	public static void timeDeposit() {
-		Scanner sc = new Scanner(System.in);
 		System.out.println("-----------------------------------------------------------------------------");
 		System.out.println(
 				"Info: Welcome here, please enter your deposit details to get your interest returns information!");
 
 		// get principal
-		System.out.print("Enter the principal amount: ");
-		double principal = sc.nextDouble();
+		double principal = prompter.promptForDouble("Principal:");
 
 		// get annual interest rate
-		System.out.print("Enter the annual interest rate (in %): ");
-		double annualRate = sc.nextDouble();
+		double annualRate = prompter.promptForDouble("Annual interest rate in %:");
 
 		// get duration in years
-		System.out.print("Enter the duration of the deposit (in year form): ");
-		int totalYear = sc.nextInt();
+		// this is a double because you can do half year deposits.
+		double totalYear = prompter.promptForDouble("Duration in years:");
 
 		// final result calculated by calling calTimeDeposit method
 		double timeDepositResult = calTimeDeposit(principal, annualRate, totalYear);
@@ -266,8 +250,7 @@ public class Main {
 	}
 
 	// call by timeDeposit(), used to calculate the
-	public static double calTimeDeposit(double principal, double annualRate, int totalYear) {
-
+	public static double calTimeDeposit(double principal, double annualRate, double totalYear) {
 		// Formula reference (using method 1):
 		// https://www.wikihow.com/Calculate-Bank-Interest-on-Savings
 		double result = principal * Math.pow((1 + annualRate / totalYear), totalYear);
