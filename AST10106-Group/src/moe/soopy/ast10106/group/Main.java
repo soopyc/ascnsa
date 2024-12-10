@@ -43,14 +43,19 @@ public class Main {
 				// method();
 				break;
 			case 'd':
-				SalariesTaxCalculate st = new SalariesTaxCalculate();
-				st.print_afterTaxIncome();
+				// seems not working yet, so i commented. (ivan)
+				
+				//SalariesTaxCalculate st = new SalariesTaxCalculate();
+				//st.print_afterTaxIncome();
 				break;
 			case 'e':
 				showfilewithFilter();
 				break;
 			case 'f':
 				mpf();
+				break;
+			case 'g':
+				timeDeposit();
 				break;
 			case 't':
 				retrieveMetadata();
@@ -99,7 +104,8 @@ public class Main {
 		System.out.println("c. Find Cash Flow over Period of Time");
 		System.out.println("d. Tax Calculation");
 		System.out.println("e. Display Spending Catergories");
-		System.out.println("f. Calculate net salary based on the MPF system");
+		System.out.println("f. MPF Net Salary Calculation");
+		System.out.println("g. Time Deposit Calculation");
 		System.out.println("t. Show personal particulars");
 		System.out.println("u. Update personal particulars");
 
@@ -180,7 +186,7 @@ public class Main {
 		double salary;
 		double afterMpfSal = -1;
 		System.out.println("-----------------------------------------------------------");
-		System.out.println("Here can help you to calculate the Net Salary after the Mandatory Provident Fund.");
+		System.out.println("Info: Here can help you to calculate the Net Salary after the Mandatory Provident Fund.");
 		System.out.println("Are you monthly paid OR non-monthly paid?");
 		System.out.println("1. Monthly Paid \t2. Non-monthly Paid");
 
@@ -223,5 +229,48 @@ public class Main {
 		System.out.printf("\nYour Weekly or Monthly Net Salary: $%.2f\n", afterMpfSal);
 		System.out.println("-----------------------------------------------------------");
 
+	}
+
+	// calculate the bank time deposit interest after user input the principal,
+	// annual interest rate, and duration
+	public static void timeDeposit() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("-----------------------------------------------------------------------------");
+		System.out.println(
+				"Info: Welcome here, please enter your deposit details to get your interest returns information!");
+
+		// get principal
+		System.out.print("Enter the principal amount: ");
+		double principal = sc.nextDouble();
+
+		// get annual interest rate
+		System.out.print("Enter the annual interest rate (in %): ");
+		double annualRate = sc.nextDouble();
+
+		// get duration in years
+		System.out.print("Enter the duration of the deposit (in year form): ");
+		int totalYear = sc.nextInt();
+
+		// final result calculated by calling calTimeDeposit method
+		double timeDepositResult = calTimeDeposit(principal, annualRate, totalYear);
+
+		// Display results
+		System.out.println("-----------------------------------------------------------------------------");
+		System.out.printf("After %d years, you will get: $%.2f\n", totalYear, timeDepositResult);
+
+		// Calculate and display net earned in
+		double earned = timeDepositResult - principal;
+		System.out.printf("Net Earned: %.2f\n", earned);
+		System.out.println("-----------------------------------------------------------------------------");
+
+	}
+
+	// call by timeDeposit(), used to calculate the
+	public static double calTimeDeposit(double principal, double annualRate, int totalYear) {
+
+		// Formula reference (using method 1):
+		// https://www.wikihow.com/Calculate-Bank-Interest-on-Savings
+		double result = principal * Math.pow((1 + annualRate / totalYear), totalYear);
+		return result;
 	}
 }
