@@ -156,7 +156,7 @@ public class Main {
 	public static void showRecord() {
 		System.out.println("\t\t        Income and Expense Records");
 		System.out.println("---------------------------------------------------------------------------");
-		System.out.printf("\n  ID \t Income\\Expsense    Amount   Categoirse       Date       Note\n");
+		System.out.printf("\n  ID \t Income\\Expsense    Amount    Category         Date        Note\n");
 		System.out.println("---------------------------------------------------------------------------");
 		System.out.println(file.getRecord());
 	}
@@ -176,17 +176,20 @@ public class Main {
 			}
 	}
 
-	// finished
+	// used for calculate net salary after the mandatory contribute
 	public static void mpf() {
 		double salary;
-		double afterMpfSal = -1;
+		double afterMpfSal = -1; 
+		// prompt this function information
 		System.out.println("-----------------------------------------------------------");
 		System.out.println("Info: Here can help you to calculate the Net Salary after the Mandatory Provident Fund.");
 		System.out.println("Are you monthly paid OR non-monthly paid?");
 
+		// get monthly paid or non-monthly paid
 		System.out.println("Type 1 for monthly or 2 for weekly.");
 		int detM = prompter.promptForInteger("Paid monthly or weekly?");
-
+		
+		// if monthly paid, then get monthly salary and calculate the net salary 
 		if (detM == 1) {
 			salary = prompter.promptForDouble("What is your monthly salary?");
 			if (salary < 7100) {
@@ -200,6 +203,7 @@ public class Main {
 				System.out.println("You need to contribute $1500 of your salary.");
 			}
 
+		// if non-monthly paid, then get weekly salary and calculate the net salary
 		} else if (detM == 2) {
 			salary = prompter.promptForDouble("What is your weekly salary?");
 			if (salary < 1960) {
@@ -210,11 +214,15 @@ public class Main {
 				afterMpfSal = salary - (salary * 0.05);
 			}
 		} else {
+			// default: if not 1 or 2 then prompt this
 			System.out.println("Invalid input, please try again.");
 			return;
 		}
+		
+		// print result
 		System.out.println("-----------------------------------------------------------");
 		System.out.println("\t  MPF net salary Report");
+		System.out.printf("Your Original Salary: $%.2f ", salary);
 		System.out.printf("\nYour Weekly or Monthly Net Salary: $%.2f\n", afterMpfSal);
 		System.out.println("-----------------------------------------------------------");
 
@@ -248,7 +256,6 @@ public class Main {
 		double earned = timeDepositResult - principal;
 		System.out.printf("Net Earned: %.2f\n", earned);
 		System.out.println("-----------------------------------------------------------------------------");
-
 	}
 
 	// call by timeDeposit(), used to calculate and return the time deposit interest
