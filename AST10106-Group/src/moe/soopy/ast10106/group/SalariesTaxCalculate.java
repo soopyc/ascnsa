@@ -33,9 +33,6 @@ public class SalariesTaxCalculate {
 	public double afterTaxIncome = 0.0;
 	double[] months = new double[12];
 
-	// get local time here
-	LocalDate date = LocalDate.now();
-
 	// create object here
 	SalariesTaxCalculate callMethods = new SalariesTaxCalculate();
 
@@ -200,6 +197,8 @@ public class SalariesTaxCalculate {
 	}
 
 	public void print_afterTaxIncome() {
+		// get local time here
+		LocalDate date = LocalDate.now();
 		System.out.printf("\n\tFile Number:%s \n\tIssue date:&s \n\tYour after-tax income is:%s \n",
 				UUID.randomUUID().toString(), date, afterTaxIncome);
 	}
