@@ -71,7 +71,7 @@ public class SalariesTaxCalculate {
 	/**
 	 * check each index of months array whether has element
 	 * 
-	 * @return the index of the first empty bit or -1 when all index have elements
+	 * @return the first empty index or -1 when all index have elements
 	 */
 	public int check_elementOfMonths() {
 		for (int i = 0; i <= months.length; i++) {
