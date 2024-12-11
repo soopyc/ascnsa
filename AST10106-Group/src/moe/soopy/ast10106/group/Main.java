@@ -27,6 +27,9 @@ public class Main {
 
 		System.out.printf("Last modified: %s\n", file.metadata.getLastModifiedPretty());
 		SalariesTaxCalculate st = new SalariesTaxCalculate(file);
+		
+		// prompt program information
+		System.out.println("Info: This Program provide the Essential Functions of the Personal Accounting.");
 		// TODO: unfinished
 		while (true) {
 			displayMenu();
@@ -96,7 +99,7 @@ public class Main {
 	// unfinished
 	public static void displayMenu() {
 		System.out.println("Welcome!");
-		System.out.println("a. Record Daily Expeznse and Income");
+		System.out.println("a. Record Daily Expense and Income");
 		System.out.println("b. Show Records");
 		System.out.println("c. Find Cash Flow over Period of Time");
 		System.out.println("d. Tax Calculation");
@@ -109,13 +112,13 @@ public class Main {
 		System.out.println("z. Save and Exit");
 	}
 
-	// finished
+	// add income/expense records
 	public static void createRecord() {
 		String IE;
 		double amount;
 		String type;
 		String notes;
-		askRecordInfo();
+		
 		System.out.println("It is a income or expense? ");
 		System.out.println("1: Income 2: Expense");
 
@@ -139,10 +142,7 @@ public class Main {
 		file.addRecord(rec);
 		// saveFile();
 
-		System.out.println(rec.toString());
-	}
-
-	public static void askRecordInfo() {
+		//System.out.println(rec.toString());
 	}
 
 	static void saveFile() {
@@ -153,12 +153,14 @@ public class Main {
 		}
 	}
 
+	// display income/expense records
 	public static void showRecord() {
 		System.out.println("\t\t        Income and Expense Records");
 		System.out.println("---------------------------------------------------------------------------");
-		System.out.printf("\n  ID \t Income\\Expsense    Amount    Category         Date        Note\n");
+		System.out.printf("\n  ID \t Income/Expsense    Amount    Category         Date        Note\n");
 		System.out.println("---------------------------------------------------------------------------");
 		System.out.println(file.getRecord());
+		System.out.println("---------------------------------------------------------------------------");
 	}
 
 	public static void showRecordsWithFilter() {
@@ -184,7 +186,8 @@ public class Main {
 		System.out.println("-----------------------------------------------------------");
 		System.out.println("Info: Here can help you to calculate the Net Salary after the Mandatory Provident Fund.");
 		System.out.println("Are you monthly paid OR non-monthly paid?");
-
+		
+		
 		// get monthly paid or non-monthly paid
 		System.out.println("Type 1 for monthly or 2 for weekly.");
 		int detM = prompter.promptForInteger("Paid monthly or weekly?");
