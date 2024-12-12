@@ -38,13 +38,16 @@ public class SalariesTaxCalculate {
 	 * Calculate salaries and store to instance arrays.
 	 */
 	public void calculateSalary() {
-		salaryPerMonth = new double[12];
-		monthsWithSalary = new boolean[12];
+		this.salaryPerMonth = new double[12];
+		this.monthsWithSalary = new boolean[12];
+		LocalDate now = LocalDate.now();
 
 		for (Record rec : this.file.getRecordsByType("income")) {
 			// check if record is salary
 			if (!rec.category.toLowerCase().contains("salary"))
 				continue; // skip record if it is not salary
+			if (rec.date.getYear() != now.getYear())
+				continue; // skip record if it is not from this year.
 			int recordMonth = rec.date.getMonth().getValue() - 1; // to get the correct month index
 			this.monthsWithSalary[recordMonth] = true; // used to calculate how much we need to extrapolate
 			this.salaryPerMonth[recordMonth] += rec.amount;
@@ -167,6 +170,7 @@ public class SalariesTaxCalculate {
 	}
 
 	public void run() {
+		this.calculateSalary();
 		this.makeUpTotalIncome();
 
 		// get local time here

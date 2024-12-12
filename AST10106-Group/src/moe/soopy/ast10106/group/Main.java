@@ -45,7 +45,6 @@ public class Main {
 				// method();
 				break;
 			case 'd':
-				st.calculateSalary();
 				st.run();
 				break;
 			case 'e':
