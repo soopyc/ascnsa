@@ -1,7 +1,7 @@
 /**
  * The one big file format
  * 
- * @author H10007740
+ * @author H10007740, H10007792, H10008060
  */
 package moe.soopy.ast10106.group.format;
 
@@ -16,7 +16,13 @@ public class OneBigFile {
 	public Metadata metadata;
 	public ArrayList<Record> records;
 
-	// initialize the class.
+	/**
+	 * Initializes the class. You might want to use OneBigFile.parse or
+	 * OneBigFile.load instead.
+	 *
+	 * @param metadata
+	 * @param records
+	 */
 	public OneBigFile(Metadata metadata, ArrayList<Record> records) {
 		this.metadata = metadata;
 		if (records == null) {
@@ -26,7 +32,12 @@ public class OneBigFile {
 		}
 	}
 
-	// parse the entire file into a object oriented format.
+	/**
+	 * parse the entire file into a object oriented format.
+	 *
+	 * @param toBeParsed the string to be parsed
+	 * @return parsed data as a OneBigFile object
+	 */
 	public static OneBigFile parse(String toBeParsed) {
 		String[] split = toBeParsed.split(SEPARATOR);
 		Metadata metadata = Metadata.parse(split[0].strip()); // metadata field, before dashes
@@ -73,6 +84,7 @@ public class OneBigFile {
 
 	/**
 	 * Get a list of records by income/expense type.
+	 *
 	 * @param type the type to get records for.
 	 * @return a list of records matching the requested type.
 	 */
@@ -86,35 +98,47 @@ public class OneBigFile {
 		return records;
 	}
 
+	/**
+	 * Get total amount of money from records by type.
+	 *
+	 * @param type the record type to search for
+	 * @return the total recorded amount of the requested type.
+	 */
 	public double getAmountByType(String type) {
 		double amounts = 0.0;
-		for (Record record : this.records) {
-			if (record.type.equals(type)) {
-				amounts += record.amount;
-			}
-		}
+		for (Record record : this.getRecordsByType(type))
+			amounts += record.amount;
 		return amounts;
 	}
 
+	/**
+	 * Get the earliest recorded date of a specific record type.
+	 *
+	 * @param type the record type to search for
+	 * @return the earliest appeared date of the type.
+	 */
 	public LocalDate getEarliestDateByType(String type) {
 		LocalDate date = LocalDate.now();
-		for (Record currentRecord : this.records) {
-			if (currentRecord.type.equals(type) && currentRecord.date.isBefore(date)) {
+		for (Record currentRecord : this.getRecordsByType(type)) {
+			if (currentRecord.date.isBefore(date)) {
 				date = currentRecord.date;
 			}
 		}
 		return date;
 	}
 
-	public String getRecord() {
+	/**
+	 * Format all records into a pretty format for printing.
+	 *
+	 * @return formatted records
+	 */
+	public String formatAllRecords() {
 		String records = "";
 		for (Record record : this.records) {
 			records += record.getPrettyRecord() + "\n";
 		}
 		return records;
 	}
-	
-	
 
 	/**
 	 * Load data from a file to the OneBigFile format.

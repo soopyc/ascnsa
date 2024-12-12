@@ -159,7 +159,7 @@ public class Main {
 		System.out.println("---------------------------------------------------------------------------");
 		System.out.printf("\n  ID \t Income/Expsense    Amount    Category         Date        Note\n");
 		System.out.println("---------------------------------------------------------------------------");
-		System.out.println(file.getRecord());
+		System.out.println(file.formatAllRecords());
 		System.out.println("---------------------------------------------------------------------------");
 	}
 
