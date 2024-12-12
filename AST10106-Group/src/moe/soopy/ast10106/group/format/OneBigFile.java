@@ -99,6 +99,19 @@ public class OneBigFile {
 	}
 
 	/**
+	 * Get a singular record based on the ID prefix.
+	 * @param id the id prefix
+	 * @return a record or null if none are found.
+	 */
+	public Record getRecordByID(String id) {
+		for (Record record : this.records) {
+			if (record.id.startsWith(id))
+				return record;
+		}
+		return null;
+	}
+
+	/**
 	 * Get total amount of money from records by type.
 	 *
 	 * @param type the record type to search for

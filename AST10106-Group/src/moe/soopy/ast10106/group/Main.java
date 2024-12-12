@@ -27,7 +27,7 @@ public class Main {
 
 		System.out.printf("Last modified: %s\n", file.metadata.getLastModifiedPretty());
 		SalariesTaxCalculate st = new SalariesTaxCalculate(file);
-		
+
 		// prompt program information
 		System.out.println("Info: This Program provide the Essential Functions of the Personal Accounting.");
 		// TODO: unfinished
@@ -55,6 +55,9 @@ public class Main {
 				break;
 			case 'g':
 				timeDeposit();
+				break;
+			case 'h':
+				deleteRecord();
 				break;
 			case 't':
 				retrieveMetadata();
@@ -117,7 +120,7 @@ public class Main {
 		double amount;
 		String type;
 		String notes;
-		
+
 		System.out.println("It is a income or expense? ");
 		System.out.println("1: Income 2: Expense");
 
@@ -141,7 +144,7 @@ public class Main {
 		file.addRecord(rec);
 		// saveFile();
 
-		//System.out.println(rec.toString());
+		// System.out.println(rec.toString());
 	}
 
 	static void saveFile() {
@@ -177,21 +180,37 @@ public class Main {
 			}
 	}
 
+	// delete a single record by id.
+	public static void deleteRecord() {
+		System.out.println("Which record would you like to delete? Enter a the ID of a specific record.");
+		System.out.println("Type cancel to cancel.");
+		String input = prompter.promptForString("ID Prefix");
+		if (input.equals("cancel"))
+			return;
+		Record toDelete = file.getRecordByID(input);
+		if (toDelete == null) {
+			System.err.printf("Could not find record with ID starting with %s.\n", input);
+			return;
+		}
+		file.records.remove(toDelete);
+		System.out.println("Removed record:");
+		System.out.println(toDelete.getPrettyRecord());
+	}
+
 	// used for calculate net salary after the mandatory contribute
 	public static void mpf() {
 		double salary;
-		double afterMpfSal = -1; 
+		double afterMpfSal = -1;
 		// prompt this function information
 		System.out.println("-----------------------------------------------------------");
 		System.out.println("Info: Here can help you to calculate the Net Salary after the Mandatory Provident Fund.");
-		System.out.println("Are you monthly paid OR non-monthly paid?");
-		
-		
+		System.out.println("Are you paid monthly or weekly?");
+
 		// get monthly paid or non-monthly paid
 		System.out.println("Type 1 for monthly or 2 for weekly.");
 		int detM = prompter.promptForInteger("Paid monthly or weekly?");
-		
-		// if monthly paid, then get monthly salary and calculate the net salary 
+
+		// if monthly paid, then get monthly salary and calculate the net salary
 		if (detM == 1) {
 			salary = prompter.promptForDouble("What is your monthly salary?");
 			if (salary < 7100) {
@@ -205,7 +224,7 @@ public class Main {
 				System.out.println("You need to contribute $1500 of your salary.");
 			}
 
-		// if non-monthly paid, then get weekly salary and calculate the net salary
+			// if non-monthly paid, then get weekly salary and calculate the net salary
 		} else if (detM == 2) {
 			salary = prompter.promptForDouble("What is your weekly salary?");
 			if (salary < 1960) {
@@ -220,7 +239,7 @@ public class Main {
 			System.out.println("Invalid input, please try again.");
 			return;
 		}
-		
+
 		// print result
 		System.out.println("-----------------------------------------------------------");
 		System.out.println("\t  MPF net salary Report");
