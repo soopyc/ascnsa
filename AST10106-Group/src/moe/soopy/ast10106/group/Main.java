@@ -42,7 +42,7 @@ public class Main {
 				showRecord();
 				break;
 			case 'c':
-				// method();
+				Monthly_Spending();
 				break;
 			case 'd':
 				st.run();
@@ -144,6 +144,41 @@ public class Main {
 		} catch (IOException e) {
 			System.err.println("Failed to save file.");
 		}
+	}
+
+	public static void Monthly_Spending() {
+		Double SavingAmount = 0.0;
+		Double SpentAmount = 0.0;
+		Double TotalAmount = 0.0;
+
+		displayText("Checking how much amount did you spent?");
+		displayText("1: Yes! I need to check 2: Nope! I pressed the wrong button");
+
+		while (true) {
+			int choiceMS = prompter.promptForInteger("");
+			if (choiceMS == 1) {
+				break;
+			} else if (choiceMS == 2) {
+				return;// Exit the method if the user pressed wrong button
+			} else {
+				displayText("Page is having maintenance");
+			}
+		}
+		for (Record record : file.getRecordsByType("income")) {
+			SavingAmount += record.getCurrentAmount();
+		}
+		for (Record record : file.getRecordsByType("expense")) {
+			SpentAmount += record.getCurrentAmount();
+		}
+		TotalAmount = SavingAmount - SpentAmount;
+
+		displayText("Total Saving Amount: " + SavingAmount);
+		displayText("Total Spent Amount: " + SpentAmount);
+		displayText("Net Amount: " + TotalAmount);
+	}
+
+	private static void displayText(String message) {
+		System.out.println(message);
 	}
 
 	// display income/expense records
