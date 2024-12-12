@@ -108,6 +108,7 @@ public class Main {
 		System.out.println("e. Display Spending Catergories");
 		System.out.println("f. MPF Net Salary Calculation");
 		System.out.println("g. Time Deposit Calculation");
+
 		System.out.println("t. Show personal particulars");
 		System.out.println("u. Update personal particulars");
 
@@ -124,18 +125,8 @@ public class Main {
 		System.out.println("It is a income or expense? ");
 		System.out.println("1: Income 2: Expense");
 
-		while (true) {
-			int checkIE = prompter.promptForInteger("");
-			if (checkIE == 1) {
-				IE = "income";
-				break;
-			} else if (checkIE == 2) {
-				IE = "expense";
-				break;
-			} else {
-				System.out.println("Unknown input: please enter either 1 or 2.");
-			}
-		}
+		String[] selection = { "income", "expense" };
+		IE = prompter.promptForStringSelection("", selection);
 		amount = prompter.promptForDouble("Please enter the price or amount");
 		type = prompter.promptForString("Please enter the type of record");
 		notes = prompter.promptForString("Please enter any notes or enter a space");
@@ -166,18 +157,13 @@ public class Main {
 	}
 
 	public static void showRecordsWithFilter() {
-		int c = prompter.promptForInteger("Please type 1 for income and 2 for expenses");
-		while (true)
-			if (c == 1) {
-				System.out.println(file.getRecordsByType("income"));
-				break;
-			} else if (c == 2) {
-				System.out.println(file.getRecordsByType("expense"));
-				break;
-			} else {
-				System.out.println("Please input again");
-				c = prompter.promptForInteger("Please type 1 for income and 2 for expenses");
-			}
+		String[] selection = { "1", "2" };
+		String c = prompter.promptForStringSelection("Type 1 for income, 2 for expenses", selection);
+		if (c.equals("1")) {
+			System.out.println(file.getRecordsByType("income"));
+		} else if (c.equals("2")) {
+			System.out.println(file.getRecordsByType("expense"));
+		}
 	}
 
 	// delete a single record by id.
@@ -194,6 +180,7 @@ public class Main {
 		}
 		file.records.remove(toDelete);
 		System.out.println("Removed record:");
+		System.out.printf("\n  ID \t Income/Expsense    Amount    Category         Date        Note\n");
 		System.out.println(toDelete.getPrettyRecord());
 	}
 
