@@ -105,7 +105,7 @@ public class Main {
 		System.out.println("b. Show Records");
 		System.out.println("c. Find Cash Flow over Period of Time");
 		System.out.println("d. Tax Calculation");
-		System.out.println("e. Display Spending Catergories");
+		System.out.println("e. Display Spending Categories");
 		System.out.println("f. MPF Net Salary Calculation");
 		System.out.println("g. Time Deposit Calculation");
 		System.out.println("h. Delete Expense and Income Records");
@@ -150,7 +150,7 @@ public class Main {
 	public static void showRecord() {
 		System.out.println("\t\t        Income and Expense Records");
 		System.out.println("---------------------------------------------------------------------------");
-		System.out.printf("\n  ID \t Income/Expsense    Amount    Category         Date        Note\n");
+		System.out.printf("\n  ID \t Income/Expense    Amount    Category         Date        Note\n");
 		System.out.println("---------------------------------------------------------------------------");
 		System.out.println(file.formatAllRecords());
 		System.out.println("---------------------------------------------------------------------------");
