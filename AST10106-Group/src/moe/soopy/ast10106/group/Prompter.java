@@ -3,6 +3,7 @@
  */
 package moe.soopy.ast10106.group;
 
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -63,7 +64,7 @@ public class Prompter {
 				return this.numberScanner.nextInt();
 			} catch (InputMismatchException e) {
 				System.err.println("Invalid input: input is not an integer.");
-				this.numberScanner.nextLine(); //clear scanner to avoid looping
+				this.numberScanner.nextLine(); // clear scanner to avoid looping
 			}
 		}
 	}
@@ -81,7 +82,7 @@ public class Prompter {
 				return this.numberScanner.nextDouble();
 			} catch (InputMismatchException e) {
 				System.err.println("Invalid input: input is not an integer.");
-				this.numberScanner.nextLine(); //clear scanner to avoid looping
+				this.numberScanner.nextLine(); // clear scanner to avoid looping
 			}
 		}
 	}
@@ -111,6 +112,22 @@ public class Prompter {
 			default:
 				System.err.println("Invalid input: please enter either 'yes' or 'no'.");
 			}
+		}
+	}
+
+	/**
+	 * Prompt the user for a string, but limit it to a selection.
+	 *
+	 * @param prompt the prompt to ask the user.
+	 * @param values list of allowed values.
+	 * @return the string the user typed in.
+	 */
+	public String promptForStringSelection(String prompt, String[] values) {
+		while (true) {
+			String input = this.promptForString(prompt);
+			if (Arrays.asList(values).contains(input.toLowerCase()))
+				return input;
+			System.err.println("Invalid input: input must be one of the following: " + Arrays.toString(values));
 		}
 	}
 }

@@ -42,7 +42,7 @@ public class Main {
 				showRecord();
 				break;
 			case 'c':
-				// method();
+				Monthly_Spending();
 				break;
 			case 'd':
 				st.run();
@@ -105,7 +105,7 @@ public class Main {
 		System.out.println("b. Show Records");
 		System.out.println("c. Find Cash Flow over Period of Time");
 		System.out.println("d. Tax Calculation");
-		System.out.println("e. Display Spending Catergories");
+		System.out.println("e. Display Spending Categories");
 		System.out.println("f. MPF Net Salary Calculation");
 		System.out.println("g. Time Deposit Calculation");
 		System.out.println("h. Delete Expense and Income Records");
@@ -125,18 +125,8 @@ public class Main {
 		System.out.println("It is a income or expense? ");
 		System.out.println("1: Income 2: Expense");
 
-		while (true) {
-			int checkIE = prompter.promptForInteger("");
-			if (checkIE == 1) {
-				IE = "income";
-				break;
-			} else if (checkIE == 2) {
-				IE = "expense";
-				break;
-			} else {
-				System.out.println("Unknown input: please enter either 1 or 2.");
-			}
-		}
+		String[] selection = { "income", "expense" };
+		IE = prompter.promptForStringSelection("", selection);
 		amount = prompter.promptForDouble("Please enter the price or amount");
 		type = prompter.promptForString("Please enter the type of record");
 		notes = prompter.promptForString("Please enter any notes or enter a space");
@@ -156,29 +146,59 @@ public class Main {
 		}
 	}
 
+	public static void Monthly_Spending() {
+		Double SavingAmount = 0.0;
+		Double SpentAmount = 0.0;
+		Double TotalAmount = 0.0;
+
+		displayText("Checking how much amount did you spent?");
+		displayText("1: Yes! I need to check 2: Nope! I pressed the wrong button");
+
+		while (true) {
+			int choiceMS = prompter.promptForInteger("");
+			if (choiceMS == 1) {
+				break;
+			} else if (choiceMS == 2) {
+				return;// Exit the method if the user pressed wrong button
+			} else {
+				displayText("Page is having maintenance");
+			}
+		}
+		for (Record record : file.getRecordsByType("income")) {
+			SavingAmount += record.getCurrentAmount();
+		}
+		for (Record record : file.getRecordsByType("expense")) {
+			SpentAmount += record.getCurrentAmount();
+		}
+		TotalAmount = SavingAmount - SpentAmount;
+
+		displayText("Total Saving Amount: " + SavingAmount);
+		displayText("Total Spent Amount: " + SpentAmount);
+		displayText("Net Amount: " + TotalAmount);
+	}
+
+	private static void displayText(String message) {
+		System.out.println(message);
+	}
+
 	// display income/expense records
 	public static void showRecord() {
 		System.out.println("\t\t        Income and Expense Records");
 		System.out.println("---------------------------------------------------------------------------");
-		System.out.printf("\n  ID \t Income/Expsense    Amount    Category         Date        Note\n");
+		System.out.printf("\n  ID \t Income/Expense    Amount    Category         Date        Note\n");
 		System.out.println("---------------------------------------------------------------------------");
 		System.out.println(file.formatAllRecords());
 		System.out.println("---------------------------------------------------------------------------");
 	}
 
 	public static void showRecordsWithFilter() {
-		int c = prompter.promptForInteger("Please type 1 for income and 2 for expenses");
-		while (true)
-			if (c == 1) {
-				System.out.println(file.getRecordsByType("income"));
-				break;
-			} else if (c == 2) {
-				System.out.println(file.getRecordsByType("expense"));
-				break;
-			} else {
-				System.out.println("Please input again");
-				c = prompter.promptForInteger("Please type 1 for income and 2 for expenses");
-			}
+		String[] selection = { "1", "2" };
+		String c = prompter.promptForStringSelection("Type 1 for income, 2 for expenses", selection);
+		if (c.equals("1")) {
+			System.out.println(file.getRecordsByType("income"));
+		} else if (c.equals("2")) {
+			System.out.println(file.getRecordsByType("expense"));
+		}
 	}
 
 	// delete a single record by id.
@@ -195,6 +215,7 @@ public class Main {
 		}
 		file.records.remove(toDelete);
 		System.out.println("Removed record:");
+		System.out.printf("\n  ID \t Income/Expsense    Amount    Category         Date        Note\n");
 		System.out.println(toDelete.getPrettyRecord());
 	}
 
