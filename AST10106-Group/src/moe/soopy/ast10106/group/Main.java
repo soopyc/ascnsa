@@ -108,7 +108,7 @@ public class Main {
 		System.out.println("e. Display Spending Catergories");
 		System.out.println("f. MPF Net Salary Calculation");
 		System.out.println("g. Time Deposit Calculation");
-
+		System.out.println("h. Delete Expense and Income Records");
 		System.out.println("t. Show personal particulars");
 		System.out.println("u. Update personal particulars");
 
