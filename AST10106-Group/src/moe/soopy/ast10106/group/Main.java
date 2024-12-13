@@ -40,26 +40,28 @@ public class Main {
 				createRecord();
 				break;
 			case 'b':
+				showRecordsWithFilter();
+				break;
+			case 'c':
 				System.out.println("\t\t\tIncome and Expense Records");
 				displayRecord(file.records);
 				break;
-			case 'c':
-				Monthly_Spending();
-				break;
 			case 'd':
-				st.run();
+				deleteRecord();
 				break;
 			case 'e':
-				showRecordsWithFilter();
+				Monthly_Spending();
 				break;
 			case 'f':
-				mpf();
+				System.out.println("--------------------------------------------------------------------------");
+				st.run();
+				System.out.println("--------------------------------------------------------------------------");
 				break;
 			case 'g':
-				timeDeposit();
+				mpf();
 				break;
 			case 'h':
-				deleteRecord();
+				timeDeposit();
 				break;
 			case 't':
 				retrieveMetadata();
@@ -100,17 +102,17 @@ public class Main {
 		System.out.println("----------------------");
 	}
 
-	// unfinished
+	// main menu
 	public static void displayMenu() {
 		System.out.println("Welcome!");
 		System.out.println("a. Record Daily Expense and Income");
-		System.out.println("b. Show Records");
-		System.out.println("c. Find Cash Flow over Period of Time");
-		System.out.println("d. Tax Calculation");
-		System.out.println("e. Display Spending Categories");
-		System.out.println("f. MPF Net Salary Calculation");
-		System.out.println("g. Time Deposit Calculation");
-		System.out.println("h. Delete Expense and Income Records");
+		System.out.println("b. Display by Record Types");
+		System.out.println("c. Show Records");
+		System.out.println("d. Delete Expense and Income Records");
+		System.out.println("e. Find Cash Flow over Period of Time");
+		System.out.println("f. Tax Calculation");
+		System.out.println("g. MPF Net Salary Calculation");
+		System.out.println("h. Time Deposit Calculation");
 		System.out.println("t. Show personal particulars");
 		System.out.println("u. Update personal particulars");
 
@@ -173,10 +175,12 @@ public class Main {
 			SpentAmount += record.getCurrentAmount();
 		}
 		TotalAmount = SavingAmount - SpentAmount;
-
+		
+		System.out.println("----------------------------------------");
 		displayText("Total Saving Amount: " + SavingAmount);
 		displayText("Total Spent Amount: " + SpentAmount);
 		displayText("Net Amount: " + TotalAmount);
+		System.out.println("----------------------------------------");
 	}
 
 	private static void displayText(String message) {
