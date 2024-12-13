@@ -125,13 +125,13 @@ public class Main {
 		String notes;
 
 		System.out.println("It is a income or expense? ");
-		System.out.println("1: Income 2: Expense");
 
 		String[] selection = { "income", "expense" };
-		IE = prompter.promptForStringSelection("", selection);
+		IE = prompter.promptForStringSelection("income/expense", selection);
 		amount = prompter.promptForDouble("Please enter the price or amount");
 		type = prompter.promptForString("Please enter the type of record");
 		notes = prompter.promptForString("Please enter any notes or enter a space");
+		notes = notes.strip().equals("") ? "-" : notes;
 
 		Record rec = new Record(IE, amount, type, LocalDate.now(), notes);
 		file.addRecord(rec);
