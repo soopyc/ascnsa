@@ -3,6 +3,7 @@ package moe.soopy.ast10106.group;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 
 import moe.soopy.ast10106.group.format.Metadata;
 import moe.soopy.ast10106.group.format.OneBigFile;
@@ -39,7 +40,8 @@ public class Main {
 				createRecord();
 				break;
 			case 'b':
-				showRecord();
+				System.out.println("\t\t\t\tIncome and Expense Records");
+				displayRecord(file.records);
 				break;
 			case 'c':
 				Monthly_Spending();
@@ -182,12 +184,21 @@ public class Main {
 	}
 
 	// display income/expense records
-	public static void showRecord() {
-		System.out.println("\t\t        Income and Expense Records");
+	public static void displayRecord(Record record) {
 		System.out.println("---------------------------------------------------------------------------");
-		System.out.printf("\n  ID \t Income/Expense    Amount    Category         Date        Note\n");
+		System.out.println("\n  ID \t Income/Expense    Amount    Category         Date        Note");
 		System.out.println("---------------------------------------------------------------------------");
-		System.out.println(file.formatAllRecords());
+		System.out.println(record.formatRecord());
+		System.out.println("---------------------------------------------------------------------------");
+	}
+
+	public static void displayRecord(ArrayList<Record> records) {
+		System.out.println("---------------------------------------------------------------------------");
+		System.out.println("\n  ID \t Income/Expense    Amount    Category         Date        Note");
+		System.out.println("---------------------------------------------------------------------------");
+		for (Record record : records) {
+			System.out.println(record.formatRecord());
+		}
 		System.out.println("---------------------------------------------------------------------------");
 	}
 
@@ -215,8 +226,7 @@ public class Main {
 		}
 		file.records.remove(toDelete);
 		System.out.println("Removed record:");
-		System.out.printf("\n  ID \t Income/Expsense    Amount    Category         Date        Note\n");
-		System.out.println(toDelete.getPrettyRecord());
+		displayRecord(toDelete);
 	}
 
 	// used for calculate net salary after the mandatory contribute
