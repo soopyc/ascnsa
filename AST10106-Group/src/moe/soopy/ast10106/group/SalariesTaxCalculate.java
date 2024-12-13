@@ -176,14 +176,16 @@ public class SalariesTaxCalculate {
 
 		// get local time here
 		LocalDate date = LocalDate.now();
-		System.out.printf("\nFile Number:\t\t\t%s", UUID.randomUUID().toString());
-		System.out.printf("\nIssue date:\t\t\t%s", date);
-		System.out.printf("\nCurrency type:\t\t\tHKD");
-		System.out.printf("\nTotal income:\t\t\t%s", totalincome);
-		System.out.printf("\nExemption:\t\t\t%s", Tax_Exemption);
-		System.out.printf("\nNet chargeable income:\t\t%s", (totalincome - Tax_Exemption));
-		System.out.printf("\nSalaries tax:\t\t\t%s", this.calculateSalariesTax());
-		System.out.printf("\nNet income:\t\t\t%s\n", totalincome - this.calculateSalariesTax());
+		System.out.printf("\t\t\tIncome and Expense Records");
+		System.out.printf("\n");
+		System.out.printf("\n\tFile Number:\t\t\t%s", UUID.randomUUID().toString());
+		System.out.printf("\n\tIssue date:\t\t\t%s", date);
+		System.out.printf("\n\tCurrency type:\t\t\tHKD");
+		System.out.printf("\n\tTotal income:\t\t\t%s", totalincome);
+		System.out.printf("\n\tExemption:\t\t\t%s", Tax_Exemption);
+		System.out.printf("\n\tNet chargeable income:\t\t%s", (totalincome - Tax_Exemption));
+		System.out.printf("\n\tSalaries tax:\t\t\t%s", this.calculateSalariesTax());
+		System.out.printf("\n\tNet income:\t\t\t%s\n", totalincome - this.calculateSalariesTax());
 	}
 
 }
