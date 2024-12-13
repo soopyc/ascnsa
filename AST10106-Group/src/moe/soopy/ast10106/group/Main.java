@@ -40,7 +40,7 @@ public class Main {
 				createRecord();
 				break;
 			case 'b':
-				System.out.println("\t\t\t\tIncome and Expense Records");
+				System.out.println("\t\t\tIncome and Expense Records");
 				displayRecord(file.records);
 				break;
 			case 'c':
@@ -186,7 +186,7 @@ public class Main {
 	// display income/expense records
 	public static void displayRecord(Record record) {
 		System.out.println("---------------------------------------------------------------------------");
-		System.out.println("\n  ID \t Income/Expense    Amount    Category         Date        Note");
+		System.out.println("  ID \t Income/Expense    Amount    Category         Date        Note");
 		System.out.println("---------------------------------------------------------------------------");
 		System.out.println(record.formatRecord());
 		System.out.println("---------------------------------------------------------------------------");
@@ -194,7 +194,7 @@ public class Main {
 
 	public static void displayRecord(ArrayList<Record> records) {
 		System.out.println("---------------------------------------------------------------------------");
-		System.out.println("\n  ID \t Income/Expense    Amount    Category         Date        Note");
+		System.out.println("  ID \t Income/Expense    Amount    Category         Date        Note");
 		System.out.println("---------------------------------------------------------------------------");
 		for (Record record : records) {
 			System.out.println(record.formatRecord());
@@ -203,13 +203,10 @@ public class Main {
 	}
 
 	public static void showRecordsWithFilter() {
-		String[] selection = { "1", "2" };
-		String c = prompter.promptForStringSelection("Type 1 for income, 2 for expenses", selection);
-		if (c.equals("1")) {
-			System.out.println(file.getRecordsByType("income"));
-		} else if (c.equals("2")) {
-			System.out.println(file.getRecordsByType("expense"));
-		}
+		String[] selection = { "income", "expense" };
+		System.out.println("Which type would you like to check?");
+		String c = prompter.promptForStringSelection("income/expense", selection);
+		displayRecord(file.getRecordsByType(c));
 	}
 
 	// delete a single record by id.
