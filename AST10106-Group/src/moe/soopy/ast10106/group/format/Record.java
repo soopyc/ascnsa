@@ -61,7 +61,7 @@ public class Record {
 	 * 
 	 * @return format at string
 	 */
-	public String getPrettyRecord() {
+	public String formatRecord() {
 		String[] splitStrId = this.id.split("-");
 		String fsSecId;
 		if (splitStrId.length > 0) {

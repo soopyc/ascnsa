@@ -3,6 +3,7 @@ package moe.soopy.ast10106.group;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 
 import moe.soopy.ast10106.group.format.Metadata;
 import moe.soopy.ast10106.group.format.OneBigFile;
@@ -39,7 +40,8 @@ public class Main {
 				createRecord();
 				break;
 			case 'b':
-				showRecord();
+				System.out.println("\t\t\tIncome and Expense Records");
+				displayRecord(file.records);
 				break;
 			case 'c':
 				Monthly_Spending();
@@ -123,13 +125,13 @@ public class Main {
 		String notes;
 
 		System.out.println("It is a income or expense? ");
-		System.out.println("1: Income 2: Expense");
 
 		String[] selection = { "income", "expense" };
-		IE = prompter.promptForStringSelection("", selection);
+		IE = prompter.promptForStringSelection("income/expense", selection);
 		amount = prompter.promptForDouble("Please enter the price or amount");
 		type = prompter.promptForString("Please enter the type of record");
 		notes = prompter.promptForString("Please enter any notes or enter a space");
+		notes = notes.strip().equals("") ? "-" : notes;
 
 		Record rec = new Record(IE, amount, type, LocalDate.now(), notes);
 		file.addRecord(rec);
@@ -182,23 +184,29 @@ public class Main {
 	}
 
 	// display income/expense records
-	public static void showRecord() {
-		System.out.println("\t\t        Income and Expense Records");
+	public static void displayRecord(Record record) {
 		System.out.println("---------------------------------------------------------------------------");
-		System.out.printf("\n  ID \t Income/Expense    Amount    Category         Date        Note\n");
+		System.out.println("  ID \t Income/Expense    Amount    Category         Date        Note");
 		System.out.println("---------------------------------------------------------------------------");
-		System.out.println(file.formatAllRecords());
+		System.out.println(record.formatRecord());
+		System.out.println("---------------------------------------------------------------------------");
+	}
+
+	public static void displayRecord(ArrayList<Record> records) {
+		System.out.println("---------------------------------------------------------------------------");
+		System.out.println("  ID \t Income/Expense    Amount    Category         Date        Note");
+		System.out.println("---------------------------------------------------------------------------");
+		for (Record record : records) {
+			System.out.println(record.formatRecord());
+		}
 		System.out.println("---------------------------------------------------------------------------");
 	}
 
 	public static void showRecordsWithFilter() {
-		String[] selection = { "1", "2" };
-		String c = prompter.promptForStringSelection("Type 1 for income, 2 for expenses", selection);
-		if (c.equals("1")) {
-			System.out.println(file.getRecordsByType("income"));
-		} else if (c.equals("2")) {
-			System.out.println(file.getRecordsByType("expense"));
-		}
+		String[] selection = { "income", "expense" };
+		System.out.println("Which type would you like to check?");
+		String c = prompter.promptForStringSelection("income/expense", selection);
+		displayRecord(file.getRecordsByType(c));
 	}
 
 	// delete a single record by id.
@@ -215,8 +223,7 @@ public class Main {
 		}
 		file.records.remove(toDelete);
 		System.out.println("Removed record:");
-		System.out.printf("\n  ID \t Income/Expsense    Amount    Category         Date        Note\n");
-		System.out.println(toDelete.getPrettyRecord());
+		displayRecord(toDelete);
 	}
 
 	// used for calculate net salary after the mandatory contribute

@@ -141,19 +141,6 @@ public class OneBigFile {
 	}
 
 	/**
-	 * Format all records into a pretty format for printing.
-	 *
-	 * @return formatted records
-	 */
-	public String formatAllRecords() {
-		String records = "";
-		for (Record record : this.records) {
-			records += record.getPrettyRecord() + "\n";
-		}
-		return records;
-	}
-
-	/**
 	 * Load data from a file to the OneBigFile format.
 	 *
 	 * References:
