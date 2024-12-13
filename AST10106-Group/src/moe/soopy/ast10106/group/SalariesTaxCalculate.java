@@ -176,7 +176,7 @@ public class SalariesTaxCalculate {
 
 		// get local time here
 		LocalDate date = LocalDate.now();
-		System.out.printf("\t\t\tIncome and Expense Records");
+		System.out.printf("\t\tEstimated Salaries Tax Calculation Sheet");
 		System.out.printf("\n");
 		System.out.printf("\n\tFile Number:\t\t\t%s", UUID.randomUUID().toString());
 		System.out.printf("\n\tIssue date:\t\t\t%s", date);
