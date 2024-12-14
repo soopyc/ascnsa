@@ -167,7 +167,7 @@ public class SalariesTaxCalculate {
 
 		}
 
-		return salariesTax;
+		return Math.max(0, salariesTax);
 	}
 
 	public void run() {
@@ -183,7 +183,7 @@ public class SalariesTaxCalculate {
 		System.out.printf("\n\tCurrency type:\t\t\tHKD");
 		System.out.printf("\n\tTotal income:\t\t\t%s", totalincome);
 		System.out.printf("\n\tExemption:\t\t\t%s", Tax_Exemption);
-		System.out.printf("\n\tNet chargeable income:\t\t%s", (totalincome - Tax_Exemption));
+		System.out.printf("\n\tNet chargeable income:\t\t%s", Math.max(0, totalincome - Tax_Exemption));
 		System.out.printf("\n\tSalaries tax:\t\t\t%s", this.calculateSalariesTax());
 		System.out.printf("\n\tNet income:\t\t\t%s\n", totalincome - this.calculateSalariesTax());
 	}
