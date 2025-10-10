@@ -1,0 +1,2 @@
+render:
+	find . -name 'index.md' -print -execdir pandoc {} -o {}.docx \;

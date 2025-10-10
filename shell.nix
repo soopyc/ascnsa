@@ -6,6 +6,7 @@ let
 in
 	pkgs.mkShell {
 		packages = with pkgs; [
+			pandoc
 			llvmPackages_19.clang
 			llvmPackages_19.clang-tools
 		];
