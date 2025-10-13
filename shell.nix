@@ -7,7 +7,8 @@ in
 	pkgs.mkShell {
 		packages = with pkgs; [
 			pandoc
-			llvmPackages_19.clang
-			llvmPackages_19.clang-tools
+
+			(hiPrio llvmPackages_21.clang-tools)
+			llvmPackages_21.clang
 		];
 	}

@@ -1,2 +1,5 @@
 render:
 	find . -name 'index.md' -print -execdir pandoc {} -o {}.docx \;
+
+shell:
+	docker compose exec -it mariadb mariadb -pmeowmeow

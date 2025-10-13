@@ -1,5 +1,9 @@
 services:
   mariadb:
     image: mariadb:12
+    volumes:
+      - db-data:/var/lib/mysql
     environment:
       MARIADB_ROOT_PASSWORD: "meowmeow"
+volumes:
+  db-data:
