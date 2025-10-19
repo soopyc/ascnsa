@@ -2,7 +2,7 @@ import random
 from collections import deque
 
 template = "insert into sales (product, quantity, price, sale_date) values {};";
-generate_count = 1000000
+generate_count = 5
 date = (1, 10)
 qty = (1, 10)
 products = {

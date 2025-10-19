@@ -35,3 +35,17 @@ When `SELECT`ing with `WHERE` clauses, indexes can help to find rows quickly whi
 As a very small example, a table with millions of entries and an index on a column can already produce visible query speedups.
 
 ![](image.png)
+
+# Question 6
+
+![](Screenshot_20251017_165731.png)
+
+The rows with `NULL` as the values of key `price` is sorted at the end of the order.
+
+If not using `DESC`, they would be sorted at the top instead.
+
+# Question 7
+
+![](Screenshot_20251017_170008.png)
+
+The `NULL` values are grouped together.

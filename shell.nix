@@ -10,5 +10,7 @@ in
 
 			(hiPrio llvmPackages_21.clang-tools)
 			llvmPackages_21.clang
+			cmake
+			ninja
 		];
 	}
