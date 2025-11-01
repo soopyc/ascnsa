@@ -1,10 +1,12 @@
 let
-	pkgs = import <nixpkgs> {
+	pkgs = import (fetchTarball "https://nixpkgs.dev/channel/nixos-unstable") {
 		config = {};
 		overlays = [];
 	};
 in
-	pkgs.mkShell {
+	pkgs.mkShellNoCC {
+		env.CC = "clang";
+		env.CXX = "clang++";
 		packages = with pkgs; [
 			pandoc
 

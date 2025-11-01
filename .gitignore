@@ -4,3 +4,4 @@
 # c/c++
 *.o
 build/
+.cache

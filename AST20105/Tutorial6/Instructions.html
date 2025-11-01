@@ -1,0 +1,115 @@
+<p><strong>AST20105 Data Structures &amp; Algorithms</strong></p>
+<p><strong>Lab 6 – Stack and Queue</strong></p>
+<h2 id="submission-details">Submission Details</h2>
+<p>In this lab, you are required to submit <strong>TWO</strong> C++
+programmes to solve the given problem shown in the section “Exercise”.
+To make the program implementation easier, you are suggested to use
+Visual Studio 2017 or later version. After you have completed the task,
+submit your program files (i.e. StackMain.cpp &amp; QueueMain.cpp for
+this lab) to Moodle by <strong>31 October 2025</strong>. For details,
+please refer to the following:</p>
+<h2 id="objective">Objective</h2>
+<p>The objective of this lab is to give you a revision on Stack and
+Queue data structure. Please note that all the concepts reviewed during
+this lab are very useful for your further study. So, you are highly
+encouraged to pay attention to what your lab instructor tells you. Apart
+from this, you will be asked to work on a lab question so as to help you
+get familiar with Stack and Queue applications.</p>
+<p><strong>Exercise</strong></p>
+<p><strong>Part 1: Stack</strong></p>
+<ol type="1">
+<li><p>Create a New Project and give your project a name, say
+Lab6a.</p></li>
+<li><p>Download the given source files StackArr.h and StackArr.cpp from
+Moodle and save them to your Lab6a folder. Also import them to your
+project.</p></li>
+<li><p>Add a source file to your project, called StackMain.cpp and
+implement your program according to the following:</p>
+<ol type="a">
+<li><p>Prompt the user to input a program filename.</p></li>
+<li><p>Open the file and check if every right brace
+(i.e. <code>}</code>), bracket (i.e. <code>]</code>), and parenthesis
+(i.e. <code>)</code>) in the file correspond to its left counterpart or
+not.</p></li>
+<li><p>If the program file passed the checking, output “The code is
+correct”. Otherwise, output “The code is incorrect”.</p></li>
+</ol></li>
+</ol>
+<p>The algorithm for checking is as follows:</p>
+<ol type="1">
+<li><p>Make an empty stack</p></li>
+<li><p>Read characters until the end of program file</p>
+<ol type="a">
+<li><p>if the character is an opening symbol, push it onto the
+stack;</p></li>
+<li><p>if it is a closing symbol and if the stack is empty, output
+“Error: Empty stack”;</p></li>
+<li><p>otherwise, pop the stack. If the symbol popped is not the
+corresponding opening symbol, output “Error: Not equal”.</p></li>
+</ol></li>
+</ol>
+<p>At the end of the file, if the stack IS NOT EMPTY, output “The code
+is incorrect”. Otherwise, output “The code is correct”.</p>
+<p>Use the provided files, testfile1.txt and testfile2.txt to test your
+program. The code file testfile1.txt is correct, while the code file
+testfile2.txt is incorrect.</p>
+<p><strong>Useful code:</strong></p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;fstream&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>string readFile<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    string tempString <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    string filename<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> <span class="st">&quot;Input file name: &quot;</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    cin <span class="op">&gt;&gt;</span> filename<span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    ifstream inputFile<span class="op">(</span>filename<span class="op">);</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Prompt user again if wrong filename received</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(!</span>inputFile<span class="op">.</span>good<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        cout <span class="op">&lt;&lt;</span> <span class="st">&quot;Wrong file name, input again please: &quot;</span><span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        cin <span class="op">&gt;&gt;</span> filename<span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        inputFile<span class="op">.</span>open<span class="op">(</span>filename<span class="op">);</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Append all lines from the file into a long string</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">((!</span>inputFile<span class="op">.</span>eof<span class="op">()))</span> <span class="op">{</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        string str<span class="op">;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        getline<span class="op">(</span>inputFile<span class="op">,</span> str<span class="op">);</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        tempString <span class="op">+=</span> str<span class="op">;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tempString<span class="op">;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p><strong>Part 2: Queue</strong></p>
+<ol type="1">
+<li><p>Create a New Project and give your project a name, say
+Lab6b.</p></li>
+<li><p>Download the given source files StackArr.h, StackArr.cpp,
+QueueArr.h and QueueArr.cpp from Canvas and save them to your Lab6b
+folder. Also import them to your project.</p></li>
+<li><p>Add a source file to your project, called QueueMain.cpp and
+implement your program according to the following:</p>
+<ol type="a">
+<li><p>prompt the user to input a string;</p></li>
+<li><p>change each uppercase letter to lowercase;</p></li>
+<li><p>place each letter both in a queue and onto a stack;</p></li>
+<li><p>verify whether the input string is a palindrome (i.e. a set of
+letters or numbers that is the same whether read from left to right or
+right to left).</p></li>
+</ol></li>
+</ol>
+<p>The following shows a number of program’s sample input / output
+sessions.</p>
+<blockquote>
+<p>Input a string: <u>aibohphobia</u></p>
+<p>aibohphobia is a palindrome</p>
+<p>Input a string: <u>level</u></p>
+<p>level is a palindrome</p>
+<p>Input a string: <u>desmond</u></p>
+<p>desmond is not a palindrome</p>
+</blockquote>
+<p>-End-</p>
+<blockquote>
+<p>Adopted from California State University (Long Beach)</p>
+<p>http://www.csulb.edu/colleges/coe/cecs/views/programs/undergrad/grade_prog.shtml</p>
+</blockquote>
