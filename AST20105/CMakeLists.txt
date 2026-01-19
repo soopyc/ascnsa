@@ -8,3 +8,5 @@ project(AST20105
 
 add_subdirectory(Tutorial5)
 add_subdirectory(Tutorial6)
+
+add_subdirectory(Test)
